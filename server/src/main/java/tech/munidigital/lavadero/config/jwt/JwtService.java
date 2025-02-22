@@ -18,7 +18,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    @Value("ddb18c3dbef4e93db411edd7cae1984dec70dbda429080382f2a9324f8974851")
+    @Value("${SECRET}")
     private String secretKey;
 
     public String generateToken(User user) {
