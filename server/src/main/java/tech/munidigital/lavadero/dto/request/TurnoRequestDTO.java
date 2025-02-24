@@ -22,7 +22,6 @@ public class TurnoRequestDTO {
     @NotNull(message = "El tipo de servicio es requerido")
     private TipoServicio tipoServicio;
 
-    // El id del vehículo asociado
     @NotNull(message = "El id del vehículo es requerido")
     private Long vehiculoId;
 

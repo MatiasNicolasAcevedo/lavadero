@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString(exclude = {"vehiculo", "cobro"})
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "turnos")
@@ -46,4 +45,3 @@ public class Turno {
     }
 
 }
-
