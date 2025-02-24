@@ -15,7 +15,6 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString(exclude = {"cliente", "turnos"})
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "vehiculos")

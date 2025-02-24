@@ -2,13 +2,16 @@ package tech.munidigital.lavadero.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 import tech.munidigital.lavadero.dto.request.CobroRequestDTO;
 import tech.munidigital.lavadero.dto.response.CobroResponseDTO;
 import tech.munidigital.lavadero.entity.Cobro;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CobroMapper {
 
+    @Named("toDto")
     @Mapping(target = "turnoId", source = "turno.id")
     CobroResponseDTO toDto(Cobro cobro);
 

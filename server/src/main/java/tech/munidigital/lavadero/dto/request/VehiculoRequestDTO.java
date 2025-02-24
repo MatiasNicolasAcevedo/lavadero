@@ -22,10 +22,8 @@ public class VehiculoRequestDTO {
     @NotNull(message = "El tipo de vehículo es requerido")
     private TipoVehiculo tipo;
 
-    // Opcional: si se quiere recibir atributos dinámicos
     private Map<String, Object> propiedadesAdicionales;
 
-    // Incluir el id del cliente al que se asocia
     @NotNull(message = "El id del cliente es requerido")
     private Long clienteId;
 

@@ -14,8 +14,6 @@ public class CobroResponseDTO {
     private Long id;
     private BigDecimal monto;
     private LocalDate fecha;
-
-    // En vez de incluir el turno completo, incluir solo el id del turno
     private Long turnoId;
 
 }

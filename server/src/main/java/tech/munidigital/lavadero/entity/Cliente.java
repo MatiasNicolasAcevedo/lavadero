@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @ToString(exclude = "vehiculos")
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "clientes")

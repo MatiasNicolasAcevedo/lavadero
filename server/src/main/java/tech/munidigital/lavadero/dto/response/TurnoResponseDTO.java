@@ -16,11 +16,7 @@ public class TurnoResponseDTO {
     private LocalDateTime fechaHora;
     private EstadoTurno estado;
     private TipoServicio tipoServicio;
-
-    // Opcional: incluir el id del vehículo sin agregar el objeto completo
     private Long vehiculoId;
-
-    // Si se requiere mostrar el cobro asociado, incluir el DTO de cobro (sin incluir nuevamente el turno)
-    // private CobroResponseDTO cobro;
+    private CobroResponseDTO cobro;
 
 }
