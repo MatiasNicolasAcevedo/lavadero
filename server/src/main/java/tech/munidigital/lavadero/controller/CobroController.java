@@ -1,7 +1,6 @@
 package tech.munidigital.lavadero.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +13,13 @@ import tech.munidigital.lavadero.service.CobroService;
 
 @RestController
 @RequestMapping("/v1/api/cobros")
-@RequiredArgsConstructor
 public class CobroController {
 
     private final CobroService cobroService;
+
+    public CobroController(CobroService cobroService) {
+        this.cobroService = cobroService;
+    }
 
     // Endpoint para crear un cobro
     @PostMapping

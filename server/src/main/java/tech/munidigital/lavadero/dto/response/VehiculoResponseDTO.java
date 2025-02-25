@@ -6,7 +6,6 @@ import java.util.Map;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehiculoResponseDTO {
@@ -17,6 +16,57 @@ public class VehiculoResponseDTO {
     private TipoVehiculo tipo;
     private Long clienteId;
 
-    // Incluir las propiedades dinámicas (siempre se devolverá un mapa, aunque esté vacío)
+    // Propiedades dinámicas (siempre se devolverá un mapa, aunque esté vacío).
     private Map<String, Object> propiedadesAdicionales;
+
+    // ---- Getters y Setters ---------------------------------------
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public TipoVehiculo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoVehiculo tipo) {
+        this.tipo = tipo;
+    }
+
+    public Long getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
+    }
+
+    public Map<String, Object> getPropiedadesAdicionales() {
+        return propiedadesAdicionales;
+    }
+
+    public void setPropiedadesAdicionales(Map<String, Object> propiedadesAdicionales) {
+        this.propiedadesAdicionales = propiedadesAdicionales;
+    }
+
 }

@@ -1,6 +1,5 @@
 package tech.munidigital.lavadero.config.security;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -15,10 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 import tech.munidigital.lavadero.repository.UserRepository;
 
 @Configuration
-@RequiredArgsConstructor
 public class AppConfig {
 
     private final UserRepository userRepository;
+
+    public AppConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {

@@ -1,6 +1,5 @@
 package tech.munidigital.lavadero.service.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,12 +13,17 @@ import tech.munidigital.lavadero.repository.UserRepository;
 import tech.munidigital.lavadero.service.RegisterService;
 
 @Service
-@RequiredArgsConstructor
 public class RegisterServiceImpl implements RegisterService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+
+    public RegisterServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+    }
 
     @Override
     public RegisterResponseDTO register(RegisterRequestDTO requestDTO) {
@@ -34,26 +38,26 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         // Crear el usuario y encriptar la contraseña
-        User user = User.builder()
-                .email(requestDTO.getEmail())
-                .password(passwordEncoder.encode(requestDTO.getPassword()))
-                .firstName(requestDTO.getFirstName())
-                .lastName(requestDTO.getLastName())
-                .phone(requestDTO.getPhone())
-                .build();
+        User user = User.of(
+                requestDTO.getEmail(),
+                passwordEncoder.encode(requestDTO.getPassword()),
+                requestDTO.getFirstName(),
+                requestDTO.getLastName(),
+                requestDTO.getPhone()
+        );
 
         userRepository.save(user);
 
         var jwtToken = jwtService.generateToken(user);
 
-        return RegisterResponseDTO.builder()
-                .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .email(user.getEmail())
-                .phone(user.getPhone())
-                .token(jwtToken)
-                .build();
+        return RegisterResponseDTO.of(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhone(),
+                jwtToken
+        );
     }
 
     private static void validateFields(RegisterRequestDTO requestDTO) {

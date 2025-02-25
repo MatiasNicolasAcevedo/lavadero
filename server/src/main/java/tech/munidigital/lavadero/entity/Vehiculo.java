@@ -53,4 +53,62 @@ public class Vehiculo {
         this.tipo = tipo;
     }
 
+    // ---- Getters y Setters ---------------------------------------
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public @NotBlank(message = "El modelo es requerido") String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(@NotBlank(message = "El modelo es requerido") String modelo) {
+        this.modelo = modelo;
+    }
+
+    public @NotBlank(message = "La matrícula es requerida") String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(@NotBlank(message = "La matrícula es requerida") String matricula) {
+        this.matricula = matricula;
+    }
+
+    public @NotNull(message = "El tipo de vehículo es requerido") TipoVehiculo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(@NotNull(message = "El tipo de vehículo es requerido") TipoVehiculo tipo) {
+        this.tipo = tipo;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<Turno> getTurnos() {
+        return turnos;
+    }
+
+    public void setTurnos(List<Turno> turnos) {
+        this.turnos = turnos;
+    }
+
+    public Map<String, Object> getPropiedadesAdicionales() {
+        return propiedadesAdicionales;
+    }
+
+    public void setPropiedadesAdicionales(Map<String, Object> propiedadesAdicionales) {
+        this.propiedadesAdicionales = propiedadesAdicionales;
+    }
+
 }

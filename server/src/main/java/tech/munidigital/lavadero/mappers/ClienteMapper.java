@@ -9,7 +9,7 @@ import tech.munidigital.lavadero.entity.Cliente;
 import tech.munidigital.lavadero.entity.Vehiculo;
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = VehiculoMapper.class)
+@Mapper(componentModel = "spring", uses = {VehiculoMapper.class})
 public interface ClienteMapper {
 
     ClienteResponseDTO toDto(Cliente cliente);

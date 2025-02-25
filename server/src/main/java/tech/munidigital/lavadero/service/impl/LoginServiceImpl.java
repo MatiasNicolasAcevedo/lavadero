@@ -43,19 +43,18 @@ public class LoginServiceImpl implements LoginService {
             );
         }
 
-        // Buscar el usuario; si no se encuentra, lanza ResponseStatusException
         User user = userRepository.findUserByEmail(requestDTO.getEmail())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         var jwtToken = jwtService.generateToken(user);
 
-        return LoginResponseDTO.builder()
-                .email(user.getEmail())
-                .id(user.getId())
-                .token(jwtToken)
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .build();
+        return LoginResponseDTO.of(
+                user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                jwtToken
+        );
     }
 
 }
