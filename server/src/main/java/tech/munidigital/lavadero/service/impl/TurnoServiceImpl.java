@@ -8,6 +8,7 @@ import tech.munidigital.lavadero.dto.request.TurnoRequestDTO;
 import tech.munidigital.lavadero.dto.response.TurnoResponseDTO;
 import tech.munidigital.lavadero.entity.Turno;
 import tech.munidigital.lavadero.entity.Vehiculo;
+import tech.munidigital.lavadero.entity.enums.EstadoTurno;
 import tech.munidigital.lavadero.mappers.TurnoMapper;
 import tech.munidigital.lavadero.repository.TurnoRepository;
 import tech.munidigital.lavadero.repository.VehiculoRepository;
@@ -65,6 +66,19 @@ public class TurnoServiceImpl implements TurnoService {
         return turnos.stream()
                 .map(turnoMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public TurnoResponseDTO updateTurnoEstado(Long id, EstadoTurno nuevoEstado) {
+        Turno turno = turnoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Turno no encontrado con id: " + id
+                ));
+
+        turno.setEstado(nuevoEstado);
+        Turno updatedTurno = turnoRepository.save(turno);
+        return turnoMapper.toDto(updatedTurno);
     }
 
 }
