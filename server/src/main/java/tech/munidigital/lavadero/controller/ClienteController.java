@@ -17,21 +17,18 @@ public class ClienteController {
 
     private final ClienteService clienteService;
 
-    // Crear un cliente
     @PostMapping
     public ResponseEntity<ClienteResponseDTO> createCliente(@Valid @RequestBody ClienteRequestDTO clienteRequestDTO) {
         ClienteResponseDTO response = clienteService.createCliente(clienteRequestDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    // Obtener un cliente por id
     @GetMapping("/{id}")
     public ResponseEntity<ClienteResponseDTO> getClienteById(@PathVariable Long id) {
         ClienteResponseDTO response = clienteService.getClienteById(id);
         return ResponseEntity.ok(response);
     }
 
-    // Obtener todos los clientes
     @GetMapping
     public ResponseEntity<List<ClienteResponseDTO>> getAllClientes() {
         List<ClienteResponseDTO> response = clienteService.getAllClientes();
