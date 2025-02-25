@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@Table(name = "app_users")
+@Table(name = "usuarios")
 public class User implements UserDetails {
 
     @Id
