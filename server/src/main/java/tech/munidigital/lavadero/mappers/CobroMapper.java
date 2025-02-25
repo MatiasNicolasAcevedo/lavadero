@@ -12,7 +12,7 @@ import tech.munidigital.lavadero.entity.Cobro;
 public interface CobroMapper {
 
     @Named("toDto")
-    @Mapping(target = "turnoId", source = "turno.id")
+    @Mapping(target = "turnoId", expression = "java(cobro.getTurno() != null ? cobro.getTurno().getId() : null)")
     CobroResponseDTO toDto(Cobro cobro);
 
     @Mapping(target = "id", ignore = true)

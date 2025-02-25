@@ -1,6 +1,5 @@
 package tech.munidigital.lavadero.service.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,12 +14,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class VehiculoServiceImpl implements VehiculoService {
 
     private final VehiculoRepository vehiculoRepository;
     private final ClienteRepository clienteRepository;
     private final VehiculoMapper vehiculoMapper;
+
+    public VehiculoServiceImpl(VehiculoRepository vehiculoRepository, ClienteRepository clienteRepository, VehiculoMapper vehiculoMapper) {
+        this.vehiculoRepository = vehiculoRepository;
+        this.clienteRepository = clienteRepository;
+        this.vehiculoMapper = vehiculoMapper;
+    }
 
     @Override
     public VehiculoResponseDTO createVehiculo(VehiculoRequestDTO vehiculoRequestDTO) {

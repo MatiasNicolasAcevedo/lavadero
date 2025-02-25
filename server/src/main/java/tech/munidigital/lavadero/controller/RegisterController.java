@@ -1,7 +1,6 @@
 package tech.munidigital.lavadero.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +12,13 @@ import tech.munidigital.lavadero.service.RegisterService;
 
 @RestController
 @RequestMapping("v1/api/auth/register")
-@RequiredArgsConstructor
 public class RegisterController {
 
     private final RegisterService registerService;
+
+    public RegisterController(RegisterService registerService) {
+        this.registerService = registerService;
+    }
 
     @PostMapping
     public ResponseEntity<RegisterResponseDTO> register(@Valid @RequestBody RegisterRequestDTO requestDTO) {

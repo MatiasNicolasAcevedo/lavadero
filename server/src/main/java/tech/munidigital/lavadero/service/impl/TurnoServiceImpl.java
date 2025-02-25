@@ -1,6 +1,5 @@
 package tech.munidigital.lavadero.service.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,12 +17,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class TurnoServiceImpl implements TurnoService {
 
     private final TurnoRepository turnoRepository;
     private final VehiculoRepository vehiculoRepository;
     private final TurnoMapper turnoMapper;
+
+    public TurnoServiceImpl(TurnoRepository turnoRepository, VehiculoRepository vehiculoRepository, TurnoMapper turnoMapper) {
+        this.turnoRepository = turnoRepository;
+        this.vehiculoRepository = vehiculoRepository;
+        this.turnoMapper = turnoMapper;
+    }
 
     @Override
     public TurnoResponseDTO createTurno(TurnoRequestDTO turnoRequestDTO) {

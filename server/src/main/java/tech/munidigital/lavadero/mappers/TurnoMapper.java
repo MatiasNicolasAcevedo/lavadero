@@ -9,8 +9,8 @@ import tech.munidigital.lavadero.entity.Turno;
 @Mapper(componentModel = "spring", uses = {CobroMapper.class})
 public interface TurnoMapper {
 
-    @Mapping(target = "vehiculoId", source = "vehiculo.id")
-    @Mapping(target = "cobro", source = "cobro", qualifiedByName = "toDto")
+    @Mapping(target = "vehiculoId", expression = "java(turno.getVehiculo() != null ? turno.getVehiculo().getId() : null)")
+    @Mapping(target = "cobro", qualifiedByName = "toDto")
     TurnoResponseDTO toDto(Turno turno);
 
     @Mapping(target = "id", ignore = true)

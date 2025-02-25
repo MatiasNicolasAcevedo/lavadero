@@ -50,4 +50,46 @@ public class Cliente {
         vehiculo.setCliente(null);
     }
 
+    // ---- Getters y Setters ---------------------------------------
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public @NotBlank(message = "El nombre es requerido") String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(@NotBlank(message = "El nombre es requerido") String nombre) {
+        this.nombre = nombre;
+    }
+
+    public @NotBlank(message = "El correo electrónico es requerido") @Email(message = "El correo electrónico debe ser válido") String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(@NotBlank(message = "El correo electrónico es requerido") @Email(message = "El correo electrónico debe ser válido") String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
+    public @NotBlank(message = "El teléfono es requerido") String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(@NotBlank(message = "El teléfono es requerido") String telefono) {
+        this.telefono = telefono;
+    }
+
+    public List<Vehiculo> getVehiculos() {
+        return vehiculos;
+    }
+
+    public void setVehiculos(List<Vehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
+    }
+
 }

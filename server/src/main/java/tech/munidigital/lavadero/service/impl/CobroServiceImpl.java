@@ -1,6 +1,5 @@
 package tech.munidigital.lavadero.service.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,12 +14,17 @@ import tech.munidigital.lavadero.repository.TurnoRepository;
 import tech.munidigital.lavadero.service.CobroService;
 
 @Service
-@RequiredArgsConstructor
 public class CobroServiceImpl implements CobroService {
 
     private final CobroRepository cobroRepository;
     private final TurnoRepository turnoRepository;
     private final CobroMapper cobroMapper;
+
+    public CobroServiceImpl(CobroRepository cobroRepository, TurnoRepository turnoRepository, CobroMapper cobroMapper) {
+        this.cobroRepository = cobroRepository;
+        this.turnoRepository = turnoRepository;
+        this.cobroMapper = cobroMapper;
+    }
 
     @Override
     public CobroResponseDTO createCobro(CobroRequestDTO cobroRequestDTO) {

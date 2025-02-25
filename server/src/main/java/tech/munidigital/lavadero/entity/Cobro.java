@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString(exclude = "turno")
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cobros")
@@ -35,6 +34,40 @@ public class Cobro {
     public Cobro(BigDecimal monto, LocalDate fecha) {
         this.monto = monto;
         this.fecha = fecha;
+    }
+
+    // ---- Getters y Setters ---------------------------------------
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public @NotNull(message = "El monto es requerido") @Positive(message = "El monto debe ser positivo") BigDecimal getMonto() {
+        return monto;
+    }
+
+    public void setMonto(@NotNull(message = "El monto es requerido") @Positive(message = "El monto debe ser positivo") BigDecimal monto) {
+        this.monto = monto;
+    }
+
+    public @NotNull(message = "La fecha es requerida") LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(@NotNull(message = "La fecha es requerida") LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public Turno getTurno() {
+        return turno;
+    }
+
+    public void setTurno(Turno turno) {
+        this.turno = turno;
     }
 
 }

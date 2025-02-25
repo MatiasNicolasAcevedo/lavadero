@@ -26,4 +26,28 @@ public class LoginRequestDTO {
     )
     private String password;
 
+    // ---- Getters y Setters ---------------------------------------
+
+    public @NotBlank(message = "Email is required.") @Email(message = "Invalid email address.") @Size(max = 50, message = "Email must not exceed 50 characters.") @Pattern(regexp = ".+@.+\\.[a-zA-Z]{2,}", message = "Email should have a valid domain with at least two characters.") String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@NotBlank(message = "Email is required.") @Email(message = "Invalid email address.") @Size(max = 50, message = "Email must not exceed 50 characters.") @Pattern(regexp = ".+@.+\\.[a-zA-Z]{2,}", message = "Email should have a valid domain with at least two characters.") String email) {
+        this.email = email;
+    }
+
+    public @NotBlank(message = "Password is required.") @Size(min = 6, message = "Password must be at least 6 characters.") @Pattern(
+            regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$",
+            message = "Password must contain at least one uppercase letter, one number, and one special character."
+    ) String getPassword() {
+        return password;
+    }
+
+    public void setPassword(@NotBlank(message = "Password is required.") @Size(min = 6, message = "Password must be at least 6 characters.") @Pattern(
+            regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$",
+            message = "Password must contain at least one uppercase letter, one number, and one special character."
+    ) String password) {
+        this.password = password;
+    }
+
 }

@@ -1,7 +1,6 @@
 package tech.munidigital.lavadero.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +12,13 @@ import tech.munidigital.lavadero.service.LoginService;
 
 @RestController
 @RequestMapping("v1/api/auth/login")
-@RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
+
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+    }
 
     @PostMapping
     public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO requestDTO) {
