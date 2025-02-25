@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableScheduling
 public class ServerWakeUpScheduler {
 
-    private final String serverUrl = "http://localhost:8080";
+    private final String serverUrl = "https://lavaderoweb.onrender.com";
 
     private final RestTemplate restTemplate = new RestTemplate();
 
