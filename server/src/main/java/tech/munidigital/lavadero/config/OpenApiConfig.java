@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
                 ),
                 @Server(
                         description = "PROD ENV",
-                        url = "cargar link de render"
+                        url = "https://lavaderoweb.onrender.com"
                 )
         },
         security = {
