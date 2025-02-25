@@ -20,8 +20,7 @@ public class JsonAttributeConverter implements AttributeConverter<Map<String, Ob
     public PGobject convertToDatabaseColumn(Map<String, Object> attribute) {
         try {
             PGobject jsonObject = new PGobject();
-            jsonObject.setType("json");
-            // Si el mapa es nulo o está vacío, guardamos "{}"
+            jsonObject.setType("jsonb");
             String json = (attribute == null || attribute.isEmpty())
                     ? "{}"
                     : objectMapper.writeValueAsString(attribute);

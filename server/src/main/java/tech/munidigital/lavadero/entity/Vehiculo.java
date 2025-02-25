@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import tech.munidigital.lavadero.entity.enums.TipoVehiculo;
-import tech.munidigital.lavadero.util.JsonAttributeConverter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,8 +44,8 @@ public class Vehiculo {
     private List<Turno> turnos = new ArrayList<>();
 
     // Atributos dinámicos
-    @Convert(converter = JsonAttributeConverter.class)
-    @Column(columnDefinition = "json")
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
     private Map<String, Object> propiedadesAdicionales = new HashMap<>();
 
     public Vehiculo(String modelo, String matricula, TipoVehiculo tipo) {
