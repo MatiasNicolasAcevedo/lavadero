@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
                 contact = @Contact(
                         name = "MuniDigital - Lavadero",
                         email = "matias.nicolas.acevedo@gmail.com",
-                        url = "cambiar por url deploy front"
+                        url = "https://lavadero-munidigital.vercel.app/"
                 ),
                 description = "Prueba Técnica Java",
                 title = "OpenApi specification - MuniDigital",
