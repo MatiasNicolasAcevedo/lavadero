@@ -2,6 +2,17 @@
 
 Bienvenido al repositorio de mi proyecto **Lavadero**. Este sistema te permite gestionar clientes, vehículos, turnos y cobros para un lavadero de autos, desarrollándolo con **Java**, **Spring Boot** y **PostgreSQL**.
 
+[![Landing Page](https://github.com/user-attachments/assets/ef782d5a-d3a4-4d54-ad76-e61f5cc63329)](https://lavadero-munidigital.vercel.app)
+
+_¡Haz click en la imagen para ver el deploy del frontend!_
+
+---
+
+- **Swagger Documentation:**  
+  [Ver Documentación Swagger](https://lavaderoweb.onrender.com/swagger-ui/index.html#/) 📝  
+  _Explora y prueba los endpoints de la API de forma interactiva._
+
+
 ---
 
 ## 📚 Documentación del Proyecto
@@ -25,6 +36,10 @@ Encontrarás a continuación los archivos de documentación que he generado dura
 
 - <a href="https://drive.google.com/file/d/1UnJ5Uj6W3mnruca8RNXeZwXMtxxrUNof/view?usp=drive_link" target="_blank">Requisitos de la Prueba Técnica.pdf - Abrir URL</a> 📋  
   _Documento con los requerimientos y especificaciones de la prueba técnica._
+
+- <a href="https://drive.google.com/file/d/13_zXjwXfnk0SpsFkCVjTiWvhDfEmaFze/view?usp=drive_link" target="_blank">Postman Collection - Abrir URL</a> 📬  
+  _Archivo con la colección de endpoints de la API para pruebas en Postman._
+
 
 ---
 
@@ -65,3 +80,7 @@ El proyecto está organizado en varios paquetes que siguen una estructura limpia
 
 ## 🧪 Pruebas de Integración
 El proyecto incluye una suite completa de pruebas de integración ubicadas en el package test. Estas pruebas reflejan la misma arquitectura del proyecto y validan los principales flujos de negocio, asegurando el correcto funcionamiento de los endpoints y la lógica de negocio.
+
+---
+
+## ✨ Desarrollado por Matias Nicolas Acevedo - 2025
