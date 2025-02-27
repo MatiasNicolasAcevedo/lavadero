@@ -8,11 +8,17 @@ _¡Haz click en la imagen para ver el deploy del frontend!_
 
 ---
 
+## Playlist del Proyecto  
+[![Ver Playlist en YouTube](https://img.shields.io/badge/YouTube-Playlist-red?logo=youtube)](https://youtube.com/playlist?list=PLkNS1qPGkDME9XgneSvzi2yYZ_AQmUOdF&si=nE-MgutukRJn5So_)  
+
+_Explora la implementación completa del sistema de gestión de lavadero de autos, con backend en Java Spring Boot y frontend conectado a una base de datos real._
+
+---
+
 - **Swagger Documentation:**  
   [Ver Documentación Swagger](https://lavaderoweb.onrender.com/swagger-ui/index.html#/) 📝  
   _Explora y prueba los endpoints de la API de forma interactiva._
-
-
+  
 ---
 
 ## 📚 Documentación del Proyecto
