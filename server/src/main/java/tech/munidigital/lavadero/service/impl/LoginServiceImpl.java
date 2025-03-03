@@ -48,13 +48,13 @@ public class LoginServiceImpl implements LoginService {
 
         var jwtToken = jwtService.generateToken(user);
 
-        return LoginResponseDTO.of(
-                user.getId(),
-                user.getEmail(),
-                user.getFirstName(),
-                user.getLastName(),
-                jwtToken
-        );
+        return LoginResponseDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .token(jwtToken)
+                .build();
     }
 
 }

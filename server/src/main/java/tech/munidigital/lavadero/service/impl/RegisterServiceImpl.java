@@ -38,26 +38,26 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         // Crear el usuario y encriptar la contraseña
-        User user = User.of(
-                requestDTO.getEmail(),
-                passwordEncoder.encode(requestDTO.getPassword()),
-                requestDTO.getFirstName(),
-                requestDTO.getLastName(),
-                requestDTO.getPhone()
-        );
+        User user = User.builder()
+                .firstName(requestDTO.getFirstName())
+                .lastName(requestDTO.getLastName())
+                .email(requestDTO.getEmail())
+                .phone(requestDTO.getPhone())
+                .password(passwordEncoder.encode(requestDTO.getPassword()))
+                .build();
 
         userRepository.save(user);
 
         var jwtToken = jwtService.generateToken(user);
 
-        return RegisterResponseDTO.of(
-                user.getId(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getPhone(),
-                jwtToken
-        );
+        return RegisterResponseDTO.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .token(jwtToken)
+                .build();
     }
 
     private static void validateFields(RegisterRequestDTO requestDTO) {
