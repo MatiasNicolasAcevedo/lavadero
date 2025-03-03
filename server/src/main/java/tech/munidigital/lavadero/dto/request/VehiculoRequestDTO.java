@@ -26,46 +26,4 @@ public class VehiculoRequestDTO {
     @NotNull(message = "El id del cliente es requerido")
     private Long clienteId;
 
-    // ---- Getters y Setters ---------------------------------------
-
-    public @NotBlank(message = "El modelo es requerido") String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(@NotBlank(message = "El modelo es requerido") String modelo) {
-        this.modelo = modelo;
-    }
-
-    public @NotBlank(message = "La matrícula es requerida") String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(@NotBlank(message = "La matrícula es requerida") String matricula) {
-        this.matricula = matricula;
-    }
-
-    public @NotNull(message = "El tipo de vehículo es requerido") TipoVehiculo getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(@NotNull(message = "El tipo de vehículo es requerido") TipoVehiculo tipo) {
-        this.tipo = tipo;
-    }
-
-    public Map<String, Object> getPropiedadesAdicionales() {
-        return propiedadesAdicionales;
-    }
-
-    public void setPropiedadesAdicionales(Map<String, Object> propiedadesAdicionales) {
-        this.propiedadesAdicionales = propiedadesAdicionales;
-    }
-
-    public @NotNull(message = "El id del cliente es requerido") Long getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(@NotNull(message = "El id del cliente es requerido") Long clienteId) {
-        this.clienteId = clienteId;
-    }
-
 }
