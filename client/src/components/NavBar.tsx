@@ -57,7 +57,7 @@ export default function NavBar() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Respositorio
+          Repositorio
         </a>
         {!isAuthenticated ? (
           <Link

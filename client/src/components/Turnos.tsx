@@ -185,196 +185,200 @@ const Turnos: React.FC = () => {
   };
 
   return (
-    <div className="p-6">
-      <Link to="/dashboard" className="text-blue-500 underline mb-4 inline-block">
-        &larr; Volver al Dashboard
-      </Link>
-      <h1 className="text-3xl font-bold text-[#007473] mb-4">
-        Turnos del Vehículo {vehiculoId}
-      </h1>
-      <button
-        onClick={openModal}
-        className="bg-[#007473] hover:bg-[#005f60] text-white px-4 py-2 rounded mb-4"
-      >
-        Agregar Turno
-      </button>
-      {turnos.length === 0 ? (
-        <p>No se encontraron turnos para este vehículo.</p>
-      ) : (
-        <ul className="space-y-2">
-          {turnos.map((turno) => (
-            <li
-            key={turno.id}
-            className="p-4 border rounded flex flex-col md:flex-row md:justify-between md:items-center"
-          >
-            {/* Columna de información */}
-            <div className="flex flex-col space-y-1 flex-1">
-              <p className="font-bold">Turno ID: {turno.id}</p>
-              <p>Fecha y Hora: {new Date(turno.fechaHora).toLocaleString()}</p>
-              <p>Tipo de Servicio: {turno.tipoServicio}</p>
-              <p>Estado: {turno.estado}</p>
-            </div>
-            
-            {/* Columna de acciones y cobro */}
-            <div className="mt-4 md:mt-0 flex flex-col items-end space-y-2">
-              <div className="space-x-2">
-                {turno.estado === "PENDIENTE" && (
-                  <button
-                    onClick={() => updateTurnoState(turno.id, "EN_PROCESO")}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
-                  >
-                    Iniciar Turno
-                  </button>
-                )}
-                {turno.estado === "EN_PROCESO" && (
-                  <button
-                    onClick={() => updateTurnoState(turno.id, "FINALIZADO")}
-                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
-                  >
-                    Finalizar Turno
-                  </button>
-                )}
-              </div>
-              <div className="w-full">
-                {turno.cobro ? (
-                  <div>
-                    <p className="font-semibold">Cobro:</p>
-                    <p>ID: {turno.cobro.id}</p>
-                    <p>Monto: {turno.cobro.monto}</p>
-                    <p>
-                      Fecha: {new Date(turno.cobro.fecha).toLocaleDateString()}
-                    </p>
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-grow p-6">
+        <Link to="/dashboard" className="text-blue-500 underline mb-4 inline-block">
+          &larr; Volver al Dashboard
+        </Link>
+        <h1 className="text-3xl font-bold text-[#007473] mb-4">
+          Turnos del Vehículo {vehiculoId}
+        </h1>
+        <button
+          onClick={openModal}
+          className="bg-[#007473] hover:bg-[#005f60] text-white px-4 py-2 rounded mb-4"
+        >
+          Agregar Turno
+        </button>
+        {turnos.length === 0 ? (
+          <p>No se encontraron turnos para este vehículo.</p>
+        ) : (
+          <ul className="space-y-2">
+            {turnos.map((turno) => (
+              <li
+                key={turno.id}
+                className="p-4 border rounded flex flex-col md:flex-row"
+              >
+                {/* Columna de información */}
+                <div className="flex flex-col space-y-1 md:w-4/5">
+                  <p className="font-bold">Turno ID: {turno.id}</p>
+                  <p>Fecha y Hora: {new Date(turno.fechaHora).toLocaleString()}</p>
+                  <p>Tipo de Servicio: {turno.tipoServicio}</p>
+                  <p>Estado: {turno.estado}</p>
+                </div>
+
+                {/* Columna de acciones y cobro */}
+                <div className="mt-4 md:mt-2 md:w-1/5 pl-4 flex flex-col items-center justify-center">
+                  {/* Botones para iniciar/finalizar turno y generar cobro */}
+                  <div className="flex flex-col items-center">
+                    {turno.estado === "PENDIENTE" && (
+                      <button
+                        onClick={() => updateTurnoState(turno.id, "EN_PROCESO")}
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+                      >
+                        Iniciar Turno
+                      </button>
+                    )}
+                    {turno.estado === "EN_PROCESO" && (
+                      <button
+                        onClick={() => updateTurnoState(turno.id, "FINALIZADO")}
+                        className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
+                      >
+                        Finalizar Turno
+                      </button>
+                    )}
+                    {turno.estado === "FINALIZADO" && !turno.cobro && (
+                      <button
+                        onClick={() => openCobroModal(turno.id)}
+                        className="mt-2 bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded"
+                      >
+                        Generar Cobro
+                      </button>
+                    )}
                   </div>
-                ) : (
-                  turno.estado === "FINALIZADO" && (
-                    <button
-                      onClick={() => openCobroModal(turno.id)}
-                      className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded"
-                    >
-                      Generar Cobro
-                    </button>
-                  )
-                )}
-              </div>
+
+                  {/* Si existe el cobro, se muestra la información debajo */}
+                  {turno.cobro && (
+                    <div className="w-full text-left mt-2">
+                      <p className="font-semibold">Cobro:</p>
+                      <p>ID: {turno.cobro.id}</p>
+                      <p>Monto: {turno.cobro.monto}</p>
+                      <p>
+                        Fecha: {new Date(turno.cobro.fecha).toLocaleDateString()}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+
+              </li>
+
+            ))}
+          </ul>
+        )}
+
+        {/* Modal para agregar turno */}
+        {modalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white rounded-lg p-6 w-96">
+              <h2 className="text-2xl font-bold mb-4">Agregar Turno</h2>
+              <form onSubmit={handleAddTurno} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Fecha y Hora
+                  </label>
+                  <input
+                    type="datetime-local"
+                    name="fechaHora"
+                    value={newTurno.fechaHora}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Tipo de Servicio
+                  </label>
+                  <select
+                    name="tipoServicio"
+                    value={newTurno.tipoServicio}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    required
+                  >
+                    <option value="">Seleccione...</option>
+                    <option value="LAVADO_EXTERIOR">
+                      Lavado Exterior
+                    </option>
+                    <option value="INTERIOR">
+                      Lavado Interior
+                    </option>
+                    <option value="AMBOS">Ambos</option>
+                  </select>
+                </div>
+                <div className="flex justify-end space-x-4">
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-[#007473] hover:bg-[#005f60] text-white px-4 py-2 rounded"
+                  >
+                    Agregar
+                  </button>
+                </div>
+              </form>
             </div>
-          </li>
-          
-          ))}
-        </ul>
-      )}
-
-      {/* Modal para agregar turno */}
-      {modalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg p-6 w-96">
-            <h2 className="text-2xl font-bold mb-4">Agregar Turno</h2>
-            <form onSubmit={handleAddTurno} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Fecha y Hora
-                </label>
-                <input
-                  type="datetime-local"
-                  name="fechaHora"
-                  value={newTurno.fechaHora}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Tipo de Servicio
-                </label>
-                <select
-                  name="tipoServicio"
-                  value={newTurno.tipoServicio}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                  required
-                >
-                  <option value="">Seleccione...</option>
-                  <option value="LAVADO_EXTERIOR">
-                    Lavado Exterior
-                  </option>
-                  <option value="INTERIOR">
-                    Lavado Interior
-                  </option>
-                  <option value="AMBOS">Ambos</option>
-                </select>
-              </div>
-              <div className="flex justify-end space-x-4">
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  className="bg-[#007473] hover:bg-[#005f60] text-white px-4 py-2 rounded"
-                >
-                  Agregar
-                </button>
-              </div>
-            </form>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Modal para agregar cobro */}
-      {cobroModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg p-6 w-96">
-            <h2 className="text-2xl font-bold mb-4">Generar Cobro</h2>
-            <form onSubmit={handleAddCobro} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Monto
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  name="monto"
-                  value={newCobro.monto}
-                  onChange={handleCobroInputChange}
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Fecha
-                </label>
-                <input
-                  type="date"
-                  name="fecha"
-                  value={newCobro.fecha}
-                  onChange={handleCobroInputChange}
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                  required
-                />
-              </div>
-              <div className="flex justify-end space-x-4">
-                <button
-                  type="button"
-                  onClick={closeCobroModal}
-                  className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded"
-                >
-                  Crear Cobro
-                </button>
-              </div>
-            </form>
+        {/* Modal para agregar cobro */}
+        {cobroModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white rounded-lg p-6 w-96">
+              <h2 className="text-2xl font-bold mb-4">Generar Cobro</h2>
+              <form onSubmit={handleAddCobro} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Monto
+                  </label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    name="monto"
+                    value={newCobro.monto}
+                    onChange={handleCobroInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Fecha
+                  </label>
+                  <input
+                    type="date"
+                    name="fecha"
+                    value={newCobro.fecha}
+                    onChange={handleCobroInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    required
+                  />
+                </div>
+                <div className="flex justify-end space-x-4">
+                  <button
+                    type="button"
+                    onClick={closeCobroModal}
+                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded"
+                  >
+                    Crear Cobro
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
