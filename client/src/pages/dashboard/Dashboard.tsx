@@ -94,9 +94,9 @@ const Dashboard: React.FC = () => {
       <div className="flex-grow p-6">
         {/* Encabezado con Dashboard y nombre del usuario */}
         <div className="flex justify-between items-center my-4 ">
-          <h1 className="text-3xl font-bold text-[#007473]">Dashboard</h1>
+          <h1 className="text-lg md:text-3xl font-bold text-[#007473]">Dashboard</h1>
           {user && (
-            <span className="text-xl md:text-3xl font-bold text-[#007473] ">
+            <span className="text-lg md:text-3xl font-bold text-[#007473] ">
               Hola, {user.fullName}
             </span>
           )}
