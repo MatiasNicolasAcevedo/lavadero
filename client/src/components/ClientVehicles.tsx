@@ -193,7 +193,7 @@ const ClientVehicles: React.FC = () => {
                       </div>
                     )}
                 </div>
-                <div className="mt-2 md:mt-0">
+                <div className="mt-4 md:mt-0">
                   <Link
                     to={`/turnos/${vehiculo.id}`}
                     className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"

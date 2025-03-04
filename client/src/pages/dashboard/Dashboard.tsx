@@ -96,7 +96,7 @@ const Dashboard: React.FC = () => {
         <div className="flex justify-between items-center my-4 ">
           <h1 className="text-3xl font-bold text-[#007473]">Dashboard</h1>
           {user && (
-            <span className="text-3xl font-bold text-[#007473] ">
+            <span className="text-xl md:text-3xl font-bold text-[#007473] ">
               Hola, {user.fullName}
             </span>
           )}
@@ -131,7 +131,7 @@ const Dashboard: React.FC = () => {
                     <p className="md:w-1/3">Email: {client.correoElectronico}</p>
                     <p className="md:w-1/3">Teléfono: {client.telefono}</p>
                   </div>
-                  <div className="mt-2 md:mt-0">
+                  <div className="mt-4 md:mt-0">
                     <Link
                       to={`/clientes/${client.id}`}
                       className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"

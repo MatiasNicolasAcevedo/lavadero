@@ -217,7 +217,7 @@ const Turnos: React.FC = () => {
                 </div>
 
                 {/* Columna de acciones y cobro */}
-                <div className="mt-4 md:mt-2 md:w-1/5 pl-4 flex flex-col items-center justify-center">
+                <div className="mt-4 md:mt-2 md:w-1/5 md:pl-4 flex flex-col items-start md:items-center justify-center">
                   {/* Botones para iniciar/finalizar turno y generar cobro */}
                   <div className="flex flex-col items-center">
                     {turno.estado === "PENDIENTE" && (
