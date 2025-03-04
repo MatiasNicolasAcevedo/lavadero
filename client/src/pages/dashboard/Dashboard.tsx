@@ -12,7 +12,7 @@ interface Client {
 const API_URL = "https://lavaderoweb.onrender.com/v1/api";
 
 const Dashboard: React.FC = () => {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const [clients, setClients] = useState<Client[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -92,7 +92,15 @@ const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex-grow p-6">
-        <h1 className="text-3xl font-bold text-[#007473] mb-4">Dashboard</h1>
+        {/* Encabezado con Dashboard y nombre del usuario */}
+        <div className="flex justify-between items-center my-4 ">
+          <h1 className="text-3xl font-bold text-[#007473]">Dashboard</h1>
+          {user && (
+            <span className="text-3xl font-bold text-[#007473] ">
+              Hola, {user.fullName}
+            </span>
+          )}
+        </div>
         <div className="flex justify-between items-center mb-4">
           <input
             type="text"

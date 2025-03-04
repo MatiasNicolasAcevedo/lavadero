@@ -37,13 +37,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    const storedIdUser = localStorage.getItem("idUser");
-    if (storedToken && storedIdUser) {
+    const storedUser = localStorage.getItem("user");
+    if (storedToken) {
       setToken(storedToken);
+    }
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
   }, []);
 
-    // Login -----------------------------------
+  // Login -----------------------------------
   const login = async (email: string, password: string) => {
     try {
       const response = await fetch(`${API_URL}/auth/login`, {
@@ -69,11 +72,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         lastName: data?.lastName,
         fullName: `${data?.firstName} ${data?.lastName}`,
       };
-  
+
       setToken(accessToken);
       setUser(userData);
       localStorage.setItem("token", accessToken);
-      localStorage.setItem("idUser", String(id));
+      localStorage.setItem("user", JSON.stringify(userData));
     } catch (error) {
       console.error("Failed to login", error);
       throw error;
@@ -96,7 +99,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         },
         body: JSON.stringify({ email, password, firstName, lastName, phone }),
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to register");
       }
@@ -110,7 +113,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setToken(null);
     setUser(null);
     localStorage.removeItem("token");
-    localStorage.removeItem("idUser");
+    localStorage.removeItem("user");
   };
 
   const contextValue: AuthContextType = {
@@ -135,4 +138,3 @@ const useAuth = () => {
   return context;
 };
 export default useAuth;
-
