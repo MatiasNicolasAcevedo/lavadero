@@ -6,6 +6,14 @@ interface PropiedadesAdicionales {
   [key: string]: string | number | boolean | undefined;
 }
 
+interface Cliente {
+  id: number;
+  nombre: string;
+  apellido: string;
+  correoElectronico: string;
+  telefono: string;
+}
+
 interface Vehiculo {
   id: number;
   modelo: string;
@@ -20,6 +28,7 @@ const API_URL = "https://lavaderoweb.onrender.com/v1/api";
 const ClientVehicles: React.FC = () => {
   const { clientId } = useParams<{ clientId: string }>();
   const { token } = useAuth();
+  const [client, setClient] = useState<Cliente | null>(null);
   const [vehicles, setVehicles] = useState<Vehiculo[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [newVehicle, setNewVehicle] = useState({
@@ -29,6 +38,26 @@ const ClientVehicles: React.FC = () => {
   });
   // Estado para los campos dinámicos (clave y valor)
   const [dynamicProps, setDynamicProps] = useState<Array<{ key: string, value: string }>>([]);
+
+  const fetchClientData = async () => {
+    try {
+      const response = await fetch(`${API_URL}/clientes/${clientId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Error al obtener los datos del cliente");
+      }
+      const data = await response.json();
+      console.log("Datos del cliente:", data);
+      setClient(data);
+    } catch (error) {
+      console.error("fetchClientData:", error);
+    }
+  };
 
   const fetchVehicles = async () => {
     try {
@@ -51,6 +80,7 @@ const ClientVehicles: React.FC = () => {
 
   useEffect(() => {
     if (clientId && token) {
+      fetchClientData();
       fetchVehicles();
     }
   }, [clientId, token]);
@@ -126,8 +156,9 @@ const ClientVehicles: React.FC = () => {
         <Link to="/dashboard" className="text-blue-500 underline mb-4 inline-block">
           &larr; Volver al Dashboard
         </Link>
+        {/* Mostrar el nombre del cliente si está disponible */}
         <h1 className="text-3xl font-bold text-[#007473] mb-4">
-          Vehículos del Cliente {clientId}
+          Vehículos de {client ? client.nombre : "Cliente"}
         </h1>
         <button
           onClick={openModal}
