@@ -5,17 +5,27 @@ import useAuth from "../services/Api";
 interface Cobro {
   id: number;
   monto: number;
-  fecha: string; // asumiendo formato ISO (yyyy-MM-dd)
+  fecha: string; // formato ISO (yyyy-MM-dd)
   turnoId: number;
 }
 
 interface Turno {
   id: number;
-  fechaHora: string; // en formato ISO
+  fechaHora: string; // formato ISO
   estado: string;
   tipoServicio: string;
   vehiculoId: number;
-  cobro?: Cobro; // información del cobro, si existe
+  cobro?: Cobro;
+}
+
+interface Vehiculo {
+  id: number;
+  modelo: string;
+  matricula: string;
+  tipo: string;
+  clienteId: number;
+  propiedadesAdicionales: { [key: string]: string | number | boolean | string[] | number[] };
+
 }
 
 const API_URL = "https://lavaderoweb.onrender.com/v1/api";
@@ -24,11 +34,12 @@ const Turnos: React.FC = () => {
   const { vehiculoId } = useParams<{ vehiculoId: string }>();
   const { token } = useAuth();
   const [turnos, setTurnos] = useState<Turno[]>([]);
+  const [vehiculo, setVehiculo] = useState<Vehiculo | null>(null);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [newTurno, setNewTurno] = useState({
     fechaHora: "",
     tipoServicio: "",
-    estado: "PENDIENTE", // estado por defecto
+    estado: "PENDIENTE",
     vehiculoId: Number(vehiculoId),
   });
 
@@ -40,7 +51,7 @@ const Turnos: React.FC = () => {
     fecha: "",
   });
 
-  // Función para obtener los turnos asociados a un vehículo
+  // Obtener turnos asociados al vehículo
   const fetchTurnos = async () => {
     try {
       const response = await fetch(`${API_URL}/turnos/vehiculo/${vehiculoId}`, {
@@ -53,16 +64,38 @@ const Turnos: React.FC = () => {
       if (!response.ok) {
         throw new Error("Error al obtener los turnos");
       }
-      const data = await response.json();
+      const data: Turno[] = await response.json(); 
       setTurnos(data);
     } catch (error) {
       console.error("fetchTurnos:", error);
+    }
+  };
+  
+
+  // Obtener detalles del vehículo
+  const fetchVehiculoDetails = async () => {
+    try {
+      const response = await fetch(`${API_URL}/vehiculos/${vehiculoId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Error al obtener detalles del vehículo");
+      }
+      const data = await response.json();
+      setVehiculo(data);
+    } catch (error) {
+      console.error("fetchVehiculoDetails:", error);
     }
   };
 
   useEffect(() => {
     if (vehiculoId && token) {
       fetchTurnos();
+      fetchVehiculoDetails();
     }
   }, [vehiculoId, token]);
 
@@ -161,7 +194,6 @@ const Turnos: React.FC = () => {
       if (selectedTurnoId === null) return;
       const payload = {
         ...newCobro,
-        // Convertir monto a número (o dejarlo tal cual si el backend lo procesa)
         monto: parseFloat(newCobro.monto),
         turnoId: selectedTurnoId,
       };
@@ -191,7 +223,10 @@ const Turnos: React.FC = () => {
           &larr; Volver al Dashboard
         </Link>
         <h1 className="text-3xl font-bold text-[#007473] mb-4">
-          Turnos del Vehículo {vehiculoId}
+          Turnos del Vehículo{" "}
+          {vehiculo
+            ? `${vehiculo.modelo} (${vehiculo.matricula})`
+            : vehiculoId}
         </h1>
         <button
           onClick={openModal}
@@ -208,17 +243,13 @@ const Turnos: React.FC = () => {
                 key={turno.id}
                 className="p-4 border rounded flex flex-col md:flex-row"
               >
-                {/* Columna de información */}
                 <div className="flex flex-col space-y-1 md:w-4/5">
                   <p className="font-bold">Turno ID: {turno.id}</p>
                   <p>Fecha y Hora: {new Date(turno.fechaHora).toLocaleString()}</p>
                   <p>Tipo de Servicio: {turno.tipoServicio}</p>
                   <p>Estado: {turno.estado}</p>
                 </div>
-
-                {/* Columna de acciones y cobro */}
                 <div className="mt-4 md:mt-2 md:w-1/5 md:pl-4 flex flex-col items-start md:items-center justify-center">
-                  {/* Botones para iniciar/finalizar turno y generar cobro */}
                   <div className="flex flex-col items-center">
                     {turno.estado === "PENDIENTE" && (
                       <button
@@ -245,8 +276,6 @@ const Turnos: React.FC = () => {
                       </button>
                     )}
                   </div>
-
-                  {/* Si existe el cobro, se muestra la información debajo */}
                   {turno.cobro && (
                     <div className="w-full text-left mt-2">
                       <p className="font-semibold">Cobro:</p>
@@ -258,10 +287,7 @@ const Turnos: React.FC = () => {
                     </div>
                   )}
                 </div>
-
-
               </li>
-
             ))}
           </ul>
         )}
