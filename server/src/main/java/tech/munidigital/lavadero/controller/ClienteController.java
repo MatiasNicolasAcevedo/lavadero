@@ -1,6 +1,10 @@
 package tech.munidigital.lavadero.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +42,19 @@ public class ClienteController {
     public ResponseEntity<List<ClienteResponseDTO>> getAllClientes() {
         List<ClienteResponseDTO> response = clienteService.getAllClientes();
         return ResponseEntity.ok(response);
+    }
+
+    // Endpoint para obtener clientes con paginación y búsqueda
+    @GetMapping("/paged")
+    public ResponseEntity<Page<ClienteResponseDTO>> getClientesPaginados(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "nombre") String sortBy,
+            @RequestParam(required = false) String search) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Page<ClienteResponseDTO> clientes = clienteService.getClientesPaginados(pageable, search);
+        return ResponseEntity.ok(clientes);
     }
 
 }

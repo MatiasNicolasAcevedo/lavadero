@@ -1,5 +1,7 @@
 package tech.munidigital.lavadero.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -54,6 +56,19 @@ public class ClienteServiceImpl implements ClienteService {
         return clientes.stream()
                 .map(clienteMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<ClienteResponseDTO> getClientesPaginados(Pageable pageable, String search) {
+        Page<Cliente> clientes;
+        if (search != null && !search.trim().isEmpty()) {
+            // Se busca solo por los clientes cuyo nombre empieza con la letra enviada
+            clientes = clienteRepository.findByNombreStartingWithIgnoreCase(search, pageable);
+        } else {
+            // Se retorna todos los clientes con paginación y orden
+            clientes = clienteRepository.findAll(pageable);
+        }
+        return clientes.map(clienteMapper::toDto);
     }
 
 }
