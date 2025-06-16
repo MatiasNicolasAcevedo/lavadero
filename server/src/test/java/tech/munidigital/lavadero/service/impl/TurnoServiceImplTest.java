@@ -46,7 +46,7 @@ public class TurnoServiceImplTest {
         turnoRequestDTO = new TurnoRequestDTO();
         turnoRequestDTO.setFechaHora(LocalDateTime.now().plusDays(1));
         turnoRequestDTO.setEstado(EstadoTurno.PENDIENTE);
-        turnoRequestDTO.setTipoServicio(TipoServicio.AMBOS);
+        turnoRequestDTO.setTipoServicio(TipoServicio.LAVADO_COMPLETO);
         turnoRequestDTO.setVehiculoId(1L);
 
         // Configuramos el vehículo simulado
