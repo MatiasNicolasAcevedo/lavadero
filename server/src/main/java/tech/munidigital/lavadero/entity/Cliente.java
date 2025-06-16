@@ -7,6 +7,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Entity
 @Getter
 @Setter
@@ -33,16 +34,5 @@ public class Cliente {
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vehiculo> vehiculos = new ArrayList<>();
-
-
-    public void addVehiculo(Vehiculo vehiculo) {
-        vehiculos.add(vehiculo);
-        vehiculo.setCliente(this);
-    }
-
-    public void removeVehiculo(Vehiculo vehiculo) {
-        vehiculos.remove(vehiculo);
-        vehiculo.setCliente(null);
-    }
 
 }

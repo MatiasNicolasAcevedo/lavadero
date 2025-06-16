@@ -7,6 +7,7 @@ import tech.munidigital.lavadero.entity.enums.EstadoTurno;
 import tech.munidigital.lavadero.entity.enums.TipoServicio;
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @Getter
 @Setter
