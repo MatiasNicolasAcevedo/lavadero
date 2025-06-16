@@ -8,7 +8,7 @@ _¡Haz click en la imagen para ver el deploy del frontend!_
 
 > [!IMPORTANT]
 > Cuenta demo para iniciar sesión:<br>
-> Email: muni.digital@lavadero.com<br>
+> Email: lavadero@munidigital.com<br>
 > Contraseña: 12345Aa*
 
 
