@@ -5,6 +5,6 @@ import tech.munidigital.lavadero.dto.response.CobroResponseDTO;
 
 public interface CobroService {
 
-    CobroResponseDTO createCobro(CobroRequestDTO cobroRequestDTO);
+  CobroResponseDTO createCobro(CobroRequestDTO cobroRequestDTO);
 
 }

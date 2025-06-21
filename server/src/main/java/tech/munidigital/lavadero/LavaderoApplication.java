@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class LavaderoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LavaderoApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(LavaderoApplication.class, args);
+  }
 
 }

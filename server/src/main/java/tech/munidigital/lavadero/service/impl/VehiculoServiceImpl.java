@@ -1,5 +1,6 @@
 package tech.munidigital.lavadero.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,57 +14,73 @@ import tech.munidigital.lavadero.service.VehiculoService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementación de {@link VehiculoService} encargada del
+ * alta y la consulta de vehículos vinculados a clientes.
+ */
 @Service
+@RequiredArgsConstructor
 public class VehiculoServiceImpl implements VehiculoService {
 
-    private final VehiculoRepository vehiculoRepository;
-    private final ClienteRepository clienteRepository;
-    private final VehiculoMapper vehiculoMapper;
+  private final VehiculoRepository vehiculoRepository;
+  private final ClienteRepository clienteRepository;
+  private final VehiculoMapper vehiculoMapper;
 
-    public VehiculoServiceImpl(VehiculoRepository vehiculoRepository, ClienteRepository clienteRepository, VehiculoMapper vehiculoMapper) {
-        this.vehiculoRepository = vehiculoRepository;
-        this.clienteRepository = clienteRepository;
-        this.vehiculoMapper = vehiculoMapper;
-    }
+  /**
+   * Registra un nuevo vehículo para un cliente dado.
+   *
+   * @param vehiculoRequestDTO datos del vehículo a crear.
+   * @return DTO del vehículo persistido.
+   * @throws ResponseStatusException 404 si el cliente no existe.
+   */
+  @Override
+  public VehiculoResponseDTO createVehiculo(VehiculoRequestDTO vehiculoRequestDTO) {
 
-    @Override
-    public VehiculoResponseDTO createVehiculo(VehiculoRequestDTO vehiculoRequestDTO) {
-        // Validar que el cliente exista
-        var cliente = clienteRepository.findById(vehiculoRequestDTO.getClienteId())
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Cliente no encontrado con id: " + vehiculoRequestDTO.getClienteId()
-                ));
+    // 1) Verificar existencia del cliente
+    var cliente = clienteRepository.findById(vehiculoRequestDTO.getClienteId())
+        .orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND,
+            "Cliente no encontrado con id: " + vehiculoRequestDTO.getClienteId()
+        ));
 
-        // Mapear el DTO a la entidad
-        Vehiculo vehiculo = vehiculoMapper.toEntity(vehiculoRequestDTO);
+    // 2) Mapear y asociar cliente
+    Vehiculo vehiculo = vehiculoMapper.toEntity(vehiculoRequestDTO);
+    vehiculo.setCliente(cliente);
 
-        // Asociar el cliente al vehículo
-        vehiculo.setCliente(cliente);
+    // 3) Persistir y devolver DTO
+    Vehiculo savedVehiculo = vehiculoRepository.save(vehiculo);
+    return vehiculoMapper.toDto(savedVehiculo);
+  }
 
-        // Guardar el vehículo
-        Vehiculo savedVehiculo = vehiculoRepository.save(vehiculo);
+  /**
+   * Obtiene un vehículo por su ID.
+   *
+   * @param id PK del vehículo.
+   * @return DTO con la información del vehículo.
+   * @throws ResponseStatusException 404 si no existe el vehículo.
+   */
+  @Override
+  public VehiculoResponseDTO getVehiculoById(Long id) {
+    Vehiculo vehiculo = vehiculoRepository.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND,
+            "Vehículo no encontrado con id: " + id
+        ));
+    return vehiculoMapper.toDto(vehiculo);
+  }
 
-        // Mapear la entidad guardada a DTO de respuesta
-        return vehiculoMapper.toDto(savedVehiculo);
-    }
-
-    @Override
-    public VehiculoResponseDTO getVehiculoById(Long id) {
-        Vehiculo vehiculo = vehiculoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Vehículo no encontrado con id: " + id
-                ));
-        return vehiculoMapper.toDto(vehiculo);
-    }
-
-    @Override
-    public List<VehiculoResponseDTO> getVehiculosByClienteId(Long clienteId) {
-        List<Vehiculo> vehiculos = vehiculoRepository.findByClienteId(clienteId);
-        return vehiculos.stream()
-                .map(vehiculoMapper::toDto)
-                .collect(Collectors.toList());
-    }
+  /**
+   * Lista todos los vehículos asociados a un cliente.
+   *
+   * @param clienteId PK del cliente.
+   * @return lista de vehículos en formato DTO.
+   */
+  @Override
+  public List<VehiculoResponseDTO> getVehiculosByClienteId(Long clienteId) {
+    return vehiculoRepository.findByClienteId(clienteId)
+        .stream()
+        .map(vehiculoMapper::toDto)
+        .collect(Collectors.toList());
+  }
 
 }

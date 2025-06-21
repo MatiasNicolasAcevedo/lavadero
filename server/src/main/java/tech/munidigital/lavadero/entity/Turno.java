@@ -17,26 +17,26 @@ import java.time.LocalDateTime;
 @Table(name = "turnos")
 public class Turno {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @NotNull(message = "La fecha y hora es requerida")
-    private LocalDateTime fechaHora;
+  @NotNull(message = "La fecha y hora es requerida")
+  private LocalDateTime fechaHora;
 
-    @NotNull(message = "El estado del turno es requerido")
-    @Enumerated(EnumType.STRING)
-    private EstadoTurno estado;
+  @NotNull(message = "El estado del turno es requerido")
+  @Enumerated(EnumType.STRING)
+  private EstadoTurno estado;
 
-    @NotNull(message = "El tipo de servicio es requerido")
-    @Enumerated(EnumType.STRING)
-    private TipoServicio tipoServicio;
+  @NotNull(message = "El tipo de servicio es requerido")
+  @Enumerated(EnumType.STRING)
+  private TipoServicio tipoServicio;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vehiculo_id")
-    private Vehiculo vehiculo;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "vehiculo_id")
+  private Vehiculo vehiculo;
 
-    @OneToOne(mappedBy = "turno", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Cobro cobro;
+  @OneToOne(mappedBy = "turno", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Cobro cobro;
 
 }

@@ -8,6 +8,6 @@ import java.util.Optional;
 @Repository
 public interface CobroRepository extends JpaRepository<Cobro, Long> {
 
-    Optional<Cobro> findByTurnoId(Long turnoId);
+  Optional<Cobro> findByTurnoId(Long turnoId);
 
 }

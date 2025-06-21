@@ -22,19 +22,19 @@ import tech.munidigital.lavadero.service.LoginService;
 @RequestMapping("v1/api/auth/login")
 public class LoginController {
 
-    private final LoginService loginService;
+  private final LoginService loginService;
 
-    @Operation(
-        summary = "Iniciar sesión",
-        description = "Permite a un usuario autenticarse en el sistema enviando credenciales válidas. "
-            + "Retorna un token JWT en el encabezado `Authorization` y en el cuerpo de la respuesta."
-    )
-    @PostMapping
-    public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO requestDTO) {
-        LoginResponseDTO loginResponseDTO = loginService.login(requestDTO);
-        return ResponseEntity.ok()
-            .header("Authorization", "Bearer " + loginResponseDTO.getToken())
-            .body(loginResponseDTO);
-    }
+  @Operation(
+      summary = "Iniciar sesión",
+      description = "Permite a un usuario autenticarse en el sistema enviando credenciales válidas. "
+          + "Retorna un token JWT en el encabezado `Authorization` y en el cuerpo de la respuesta."
+  )
+  @PostMapping
+  public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO requestDTO) {
+    LoginResponseDTO loginResponseDTO = loginService.login(requestDTO);
+    return ResponseEntity.ok()
+        .header("Authorization", "Bearer " + loginResponseDTO.getToken())
+        .body(loginResponseDTO);
+  }
 
 }

@@ -1,6 +1,9 @@
 package tech.munidigital.lavadero.dto.response;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import tech.munidigital.lavadero.entity.enums.TipoVehiculo;
 import java.util.Map;
 
@@ -10,13 +13,13 @@ import java.util.Map;
 @NoArgsConstructor
 public class VehiculoResponseDTO {
 
-    private Long id;
-    private String modelo;
-    private String matricula;
-    private TipoVehiculo tipo;
-    private Long clienteId;
+  private Long id;
+  private String modelo;
+  private String matricula;
+  private TipoVehiculo tipo;
+  private Long clienteId;
 
-    // Propiedades dinámicas (siempre se devolverá un mapa, aunque esté vacío).
-    private Map<String, Object> propiedadesAdicionales;
+  // Propiedades dinámicas (siempre se devolverá un mapa, aunque esté vacío).
+  private Map<String, Object> propiedadesAdicionales;
 
 }

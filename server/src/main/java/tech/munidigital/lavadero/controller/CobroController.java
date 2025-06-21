@@ -23,17 +23,17 @@ import tech.munidigital.lavadero.service.CobroService;
 @RequestMapping("/v1/api/cobros")
 public class CobroController {
 
-    private final CobroService cobroService;
+  private final CobroService cobroService;
 
-    @Operation(
-        summary = "Registrar un nuevo cobro",
-        description = "Registra un nuevo cobro en el sistema asociado a un cliente y uno o más servicios. "
-            + "Es necesario enviar los datos completos del cobro en el cuerpo de la solicitud."
-    )
-    @PostMapping
-    public ResponseEntity<CobroResponseDTO> createCobro(@Valid @RequestBody CobroRequestDTO cobroRequestDTO) {
-        CobroResponseDTO response = cobroService.createCobro(cobroRequestDTO);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
+  @Operation(
+      summary = "Registrar un nuevo cobro",
+      description = "Registra un nuevo cobro en el sistema asociado a un cliente y uno o más servicios. "
+          + "Es necesario enviar los datos completos del cobro en el cuerpo de la solicitud."
+  )
+  @PostMapping
+  public ResponseEntity<CobroResponseDTO> createCobro(@Valid @RequestBody CobroRequestDTO cobroRequestDTO) {
+    CobroResponseDTO response = cobroService.createCobro(cobroRequestDTO);
+    return new ResponseEntity<>(response, HttpStatus.CREATED);
+  }
 
 }

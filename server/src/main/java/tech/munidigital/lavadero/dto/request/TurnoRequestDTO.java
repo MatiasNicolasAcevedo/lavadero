@@ -1,7 +1,10 @@
 package tech.munidigital.lavadero.dto.request;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import tech.munidigital.lavadero.entity.enums.EstadoTurno;
 import tech.munidigital.lavadero.entity.enums.TipoServicio;
 import java.time.LocalDateTime;
@@ -12,16 +15,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TurnoRequestDTO {
 
-    @NotNull(message = "La fecha y hora es requerida")
-    private LocalDateTime fechaHora;
+  @NotNull(message = "La fecha y hora es requerida")
+  private LocalDateTime fechaHora;
 
-    @NotNull(message = "El estado del turno es requerido")
-    private EstadoTurno estado;
+  @NotNull(message = "El estado del turno es requerido")
+  private EstadoTurno estado;
 
-    @NotNull(message = "El tipo de servicio es requerido")
-    private TipoServicio tipoServicio;
+  @NotNull(message = "El tipo de servicio es requerido")
+  private TipoServicio tipoServicio;
 
-    @NotNull(message = "El id del vehículo es requerido")
-    private Long vehiculoId;
+  @NotNull(message = "El id del vehículo es requerido")
+  private Long vehiculoId;
 
 }

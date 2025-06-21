@@ -22,31 +22,31 @@ import java.util.Map;
 @Table(name = "vehiculos")
 public class Vehiculo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @NotBlank(message = "El modelo es requerido")
-    private String modelo;
+  @NotBlank(message = "El modelo es requerido")
+  private String modelo;
 
-    @NotBlank(message = "La matrícula es requerida")
-    @Column(nullable = false)
-    private String matricula;
+  @NotBlank(message = "La matrícula es requerida")
+  @Column(nullable = false)
+  private String matricula;
 
-    @NotNull(message = "El tipo de vehículo es requerido")
-    @Enumerated(EnumType.STRING)
-    private TipoVehiculo tipo;
+  @NotNull(message = "El tipo de vehículo es requerido")
+  @Enumerated(EnumType.STRING)
+  private TipoVehiculo tipo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "cliente_id")
+  private Cliente cliente;
 
-    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Turno> turnos = new ArrayList<>();
+  @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Turno> turnos = new ArrayList<>();
 
-    // Atributos dinámicos
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "jsonb")
-    private Map<String, Object> propiedadesAdicionales = new HashMap<>();
+  // Atributos dinámicos
+  @JdbcTypeCode(SqlTypes.JSON)
+  @Column(columnDefinition = "jsonb")
+  private Map<String, Object> propiedadesAdicionales = new HashMap<>();
 
 }

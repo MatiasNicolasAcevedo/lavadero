@@ -2,7 +2,10 @@ package tech.munidigital.lavadero.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import tech.munidigital.lavadero.entity.enums.TipoVehiculo;
 import java.util.Map;
 
@@ -12,18 +15,18 @@ import java.util.Map;
 @NoArgsConstructor
 public class VehiculoRequestDTO {
 
-    @NotBlank(message = "El modelo es requerido")
-    private String modelo;
+  @NotBlank(message = "El modelo es requerido")
+  private String modelo;
 
-    @NotBlank(message = "La matrícula es requerida")
-    private String matricula;
+  @NotBlank(message = "La matrícula es requerida")
+  private String matricula;
 
-    @NotNull(message = "El tipo de vehículo es requerido")
-    private TipoVehiculo tipo;
+  @NotNull(message = "El tipo de vehículo es requerido")
+  private TipoVehiculo tipo;
 
-    private Map<String, Object> propiedadesAdicionales;
+  private Map<String, Object> propiedadesAdicionales;
 
-    @NotNull(message = "El id del cliente es requerido")
-    private Long clienteId;
+  @NotNull(message = "El id del cliente es requerido")
+  private Long clienteId;
 
 }

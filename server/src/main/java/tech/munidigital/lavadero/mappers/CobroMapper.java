@@ -11,12 +11,12 @@ import tech.munidigital.lavadero.entity.Cobro;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CobroMapper {
 
-    @Named("toDto")
-    @Mapping(target = "turnoId", expression = "java(cobro.getTurno() != null ? cobro.getTurno().getId() : null)")
-    CobroResponseDTO toDto(Cobro cobro);
+  @Named("toDto")
+  @Mapping(target = "turnoId", expression = "java(cobro.getTurno() != null ? cobro.getTurno().getId() : null)")
+  CobroResponseDTO toDto(Cobro cobro);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "turno", ignore = true)
-    Cobro toEntity(CobroRequestDTO dto);
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "turno", ignore = true)
+  Cobro toEntity(CobroRequestDTO dto);
 
 }

@@ -5,6 +5,6 @@ import tech.munidigital.lavadero.dto.response.RegisterResponseDTO;
 
 public interface RegisterService {
 
-    RegisterResponseDTO register(RegisterRequestDTO requestDTO);
+  RegisterResponseDTO register(RegisterRequestDTO requestDTO);
 
 }

@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface VehiculoService {
 
-    VehiculoResponseDTO createVehiculo(VehiculoRequestDTO vehiculoRequestDTO);
-    VehiculoResponseDTO getVehiculoById(Long id);
-    List<VehiculoResponseDTO> getVehiculosByClienteId(Long clienteId);
+  VehiculoResponseDTO createVehiculo(VehiculoRequestDTO vehiculoRequestDTO);
+
+  VehiculoResponseDTO getVehiculoById(Long id);
+
+  List<VehiculoResponseDTO> getVehiculosByClienteId(Long clienteId);
 
 }

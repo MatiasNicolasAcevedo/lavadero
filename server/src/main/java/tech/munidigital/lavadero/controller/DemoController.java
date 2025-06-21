@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DemoController {
 
-    @Operation(
-        summary = "Endpoint seguro de prueba",
-        description = "Este endpoint está protegido por seguridad y se utiliza para validar que la autenticación y autorización funcionan correctamente."
-    )
-    @PostMapping(value = "/demo")
-    public String welcome() {
-        return "Welcome from a secure endpoint";
-    }
+  @Operation(
+      summary = "Endpoint seguro de prueba",
+      description = "Este endpoint está protegido por seguridad y se utiliza para validar que la autenticación y autorización funcionan correctamente."
+  )
+  @PostMapping(value = "/demo")
+  public String welcome() {
+    return "Welcome from a secure endpoint";
+  }
 
 }

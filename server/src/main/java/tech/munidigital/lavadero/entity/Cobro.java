@@ -17,19 +17,19 @@ import java.time.LocalDate;
 @Table(name = "cobros")
 public class Cobro {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @NotNull(message = "El monto es requerido")
-    @Positive(message = "El monto debe ser positivo")
-    private BigDecimal monto;
+  @NotNull(message = "El monto es requerido")
+  @Positive(message = "El monto debe ser positivo")
+  private BigDecimal monto;
 
-    @NotNull(message = "La fecha es requerida")
-    private LocalDate fecha;
+  @NotNull(message = "La fecha es requerida")
+  private LocalDate fecha;
 
-    @OneToOne
-    @JoinColumn(name = "turno_id", unique = true)
-    private Turno turno;
+  @OneToOne
+  @JoinColumn(name = "turno_id", unique = true)
+  private Turno turno;
 
 }
