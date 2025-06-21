@@ -2,15 +2,13 @@ package tech.munidigital.lavadero.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import tech.munidigital.lavadero.entity.enums.TipoVehiculo;
 import java.util.Map;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehiculoRequestDTO {

@@ -1,7 +1,5 @@
 package tech.munidigital.lavadero.service.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,123 +12,122 @@ import tech.munidigital.lavadero.dto.response.ClienteResponseDTO;
 import tech.munidigital.lavadero.entity.Cliente;
 import tech.munidigital.lavadero.mappers.ClienteMapper;
 import tech.munidigital.lavadero.repository.ClienteRepository;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ClienteServiceImplTest {
+class ClienteServiceImplTest {
 
-    @Mock
-    private ClienteRepository clienteRepository;
+  private static final String EMAIL = "juan.perez@example.com";
 
-    @Mock
-    private ClienteMapper clienteMapper;
+  @Mock
+  private ClienteRepository clienteRepository;
+  @Mock
+  private ClienteMapper clienteMapper;
 
-    @InjectMocks
-    private ClienteServiceImpl clienteService;
+  @InjectMocks
+  private ClienteServiceImpl clienteService;
 
-    private ClienteRequestDTO clienteRequestDTO;
-    private Cliente cliente;
-    private ClienteResponseDTO clienteResponseDTO;
+  private ClienteRequestDTO requestDTO;
+  private Cliente entity;
+  private ClienteResponseDTO responseDTO;
 
-    @BeforeEach
-    void setUp() {
-        // Configuramos un ClienteRequestDTO válido
-        clienteRequestDTO = new ClienteRequestDTO();
-        clienteRequestDTO.setNombre("Juan Pérez");
-        clienteRequestDTO.setCorreoElectronico("juan.perez@example.com");
-        clienteRequestDTO.setTelefono("123456789");
+  @BeforeEach
+  void setUp() {
+    requestDTO = ClienteRequestDTO.builder()
+        .nombre("Juan Pérez")
+        .correoElectronico(EMAIL)
+        .telefono("123456789")
+        .build();
 
-        // Configuramos la entidad Cliente correspondiente
-        cliente = new Cliente();
-        cliente.setId(1L);
-        cliente.setNombre(clienteRequestDTO.getNombre());
-        cliente.setCorreoElectronico(clienteRequestDTO.getCorreoElectronico());
-        cliente.setTelefono(clienteRequestDTO.getTelefono());
+    entity = Cliente.builder()
+        .id(1L)
+        .nombre(requestDTO.getNombre())
+        .correoElectronico(EMAIL)
+        .telefono(requestDTO.getTelefono())
+        .build();
 
-        // Configuramos el DTO de respuesta
-        clienteResponseDTO = new ClienteResponseDTO();
-        clienteResponseDTO.setId(1L);
-        clienteResponseDTO.setNombre(cliente.getNombre());
-        clienteResponseDTO.setCorreoElectronico(cliente.getCorreoElectronico());
-        clienteResponseDTO.setTelefono(cliente.getTelefono());
-        clienteResponseDTO.setVehiculos(null); // o new ArrayList<>()
-    }
+    responseDTO = ClienteResponseDTO.builder()
+        .id(entity.getId())
+        .nombre(entity.getNombre())
+        .correoElectronico(entity.getCorreoElectronico())
+        .telefono(entity.getTelefono())
+        .build();
+  }
 
-    @Test
-    void createCliente_validRequest_returnsClienteResponseDTO() {
-        // Simulamos que no existe un cliente con el mismo correo
-        when(clienteRepository.findByCorreoElectronico(clienteRequestDTO.getCorreoElectronico()))
-                .thenReturn(Optional.empty());
-        // Simulamos el mapeo de DTO a entidad
-        when(clienteMapper.toEntity(clienteRequestDTO)).thenReturn(cliente);
-        // Simulamos el guardado del cliente
-        when(clienteRepository.save(cliente)).thenReturn(cliente);
-        // Simulamos el mapeo de entidad a DTO de respuesta
-        when(clienteMapper.toDto(cliente)).thenReturn(clienteResponseDTO);
+  /* createCliente */
 
-        // Ejecutamos el servicio
-        ClienteResponseDTO result = clienteService.createCliente(clienteRequestDTO);
+  @Test
+  void createCliente_whenValid_returnsResponse() {
+    when(clienteRepository.findByCorreoElectronico(EMAIL)).thenReturn(Optional.empty());
+    when(clienteMapper.toEntity(requestDTO)).thenReturn(entity);
+    when(clienteRepository.save(entity)).thenReturn(entity);
+    when(clienteMapper.toDto(entity)).thenReturn(responseDTO);
 
-        // Verificamos los resultados
-        assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("Juan Pérez", result.getNombre());
-        verify(clienteRepository).findByCorreoElectronico(clienteRequestDTO.getCorreoElectronico());
-        verify(clienteRepository).save(cliente);
-    }
+    ClienteResponseDTO result = clienteService.createCliente(requestDTO);
 
-    @Test
-    void createCliente_duplicateEmail_throwsException() {
-        // Simulamos que ya existe un cliente con el correo electrónico
-        when(clienteRepository.findByCorreoElectronico(clienteRequestDTO.getCorreoElectronico()))
-                .thenReturn(Optional.of(cliente));
+    assertThat(result)
+        .usingRecursiveComparison()
+        .isEqualTo(responseDTO);
 
-        // Verificamos que se lance la excepción por correo duplicado
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            clienteService.createCliente(clienteRequestDTO);
-        });
-        assertTrue(exception.getReason().contains("El correo electrónico ya está registrado"));
-        verify(clienteRepository).findByCorreoElectronico(clienteRequestDTO.getCorreoElectronico());
-        verify(clienteRepository, never()).save(any(Cliente.class));
-    }
+    verify(clienteRepository).findByCorreoElectronico(EMAIL);
+    verify(clienteRepository).save(entity);
+  }
 
-    @Test
-    void getClienteById_existingClient_returnsClienteResponseDTO() {
-        // Simulamos que se encuentra el cliente
-        when(clienteRepository.findById(1L)).thenReturn(Optional.of(cliente));
-        when(clienteMapper.toDto(cliente)).thenReturn(clienteResponseDTO);
+  @Test
+  void createCliente_whenEmailExists_throws400() {
+    when(clienteRepository.findByCorreoElectronico(EMAIL)).thenReturn(Optional.of(entity));
 
-        ClienteResponseDTO result = clienteService.getClienteById(1L);
-        assertNotNull(result);
-        assertEquals(1L, result.getId());
-        verify(clienteRepository).findById(1L);
-    }
+    assertThatThrownBy(() -> clienteService.createCliente(requestDTO))
+        .isInstanceOf(ResponseStatusException.class)
+        .hasMessageContaining("ya está registrado");
 
-    @Test
-    void getClienteById_clientNotFound_throwsException() {
-        // Simulamos que no se encuentra el cliente
-        when(clienteRepository.findById(1L)).thenReturn(Optional.empty());
+    verify(clienteRepository).findByCorreoElectronico(EMAIL);
+    verify(clienteRepository, never()).save(any());
+  }
 
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            clienteService.getClienteById(1L);
-        });
-        assertTrue(exception.getReason().contains("Cliente no encontrado con id: 1"));
-        verify(clienteRepository).findById(1L);
-    }
+  /* getClienteById */
 
-    @Test
-    void getAllClientes_returnsListOfClienteResponseDTO() {
-        // Simulamos que el repositorio retorna una lista con un cliente
-        when(clienteRepository.findAll()).thenReturn(Arrays.asList(cliente));
-        when(clienteMapper.toDto(cliente)).thenReturn(clienteResponseDTO);
+  @Test
+  void getClienteById_whenExists_returnsResponse() {
+    when(clienteRepository.findById(1L)).thenReturn(Optional.of(entity));
+    when(clienteMapper.toDto(entity)).thenReturn(responseDTO);
 
-        List<ClienteResponseDTO> result = clienteService.getAllClientes();
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        verify(clienteRepository).findAll();
-    }
+    ClienteResponseDTO result = clienteService.getClienteById(1L);
+
+    assertThat(result.getId()).isEqualTo(1L);
+    verify(clienteRepository).findById(1L);
+  }
+
+  @Test
+  void getClienteById_whenMissing_throws404() {
+    when(clienteRepository.findById(1L)).thenReturn(Optional.empty());
+
+    assertThatThrownBy(() -> clienteService.getClienteById(1L))
+        .isInstanceOf(ResponseStatusException.class)
+        .hasMessageContaining("Cliente no encontrado");
+
+    verify(clienteRepository).findById(1L);
+  }
+
+  /* getAllClientes */
+
+  @Test
+  void getAllClientes_returnsList() {
+    when(clienteRepository.findAll()).thenReturn(List.of(entity));
+    when(clienteMapper.toDto(entity)).thenReturn(responseDTO);
+
+    List<ClienteResponseDTO> result = clienteService.getAllClientes();
+
+    assertThat(result)
+        .hasSize(1)
+        .first()
+        .isEqualTo(responseDTO);
+
+    verify(clienteRepository).findAll();
+  }
 
 }

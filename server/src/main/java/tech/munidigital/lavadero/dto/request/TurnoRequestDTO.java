@@ -1,16 +1,14 @@
 package tech.munidigital.lavadero.dto.request;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import tech.munidigital.lavadero.entity.enums.EstadoTurno;
 import tech.munidigital.lavadero.entity.enums.TipoServicio;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class TurnoRequestDTO {

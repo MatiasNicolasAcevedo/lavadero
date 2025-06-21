@@ -1,14 +1,12 @@
 package tech.munidigital.lavadero.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import tech.munidigital.lavadero.entity.enums.TipoVehiculo;
 import java.util.Map;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehiculoResponseDTO {
