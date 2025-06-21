@@ -1,11 +1,5 @@
 package tech.munidigital.lavadero.service.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,128 +15,119 @@ import tech.munidigital.lavadero.entity.enums.EstadoTurno;
 import tech.munidigital.lavadero.mappers.CobroMapper;
 import tech.munidigital.lavadero.repository.CobroRepository;
 import tech.munidigital.lavadero.repository.TurnoRepository;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class CobroServiceImplTest {
+class CobroServiceImplTest {
 
-    @Mock
-    private CobroRepository cobroRepository;
+  private static final BigDecimal MONTO = new BigDecimal("100.00");
+  private static final Long TURNO_ID = 1L;
 
-    @Mock
-    private TurnoRepository turnoRepository;
+  @Mock
+  private CobroRepository cobroRepository;
+  @Mock
+  private TurnoRepository turnoRepository;
+  @Mock
+  private CobroMapper cobroMapper;
+  @InjectMocks
+  private CobroServiceImpl cobroService;
 
-    @Mock
-    private CobroMapper cobroMapper;
+  private CobroRequestDTO requestDTO;
+  private Turno turnoFinalizado;
+  private Cobro cobro;
+  private CobroResponseDTO responseDTO;
 
-    @InjectMocks
-    private CobroServiceImpl cobroService;
+  @BeforeEach
+  void setUp() {
+    requestDTO = CobroRequestDTO.builder()
+        .monto(MONTO)
+        .fecha(LocalDate.now())
+        .turnoId(TURNO_ID)
+        .build();
 
-    private CobroRequestDTO cobroRequestDTO;
-    private Turno turno;
-    private Cobro cobro;
-    private CobroResponseDTO cobroResponseDTO;
+    turnoFinalizado = Turno.builder()
+        .id(TURNO_ID)
+        .estado(EstadoTurno.FINALIZADO)
+        .build();
 
-    @BeforeEach
-    void setUp() {
-        // Configuramos un CobroRequestDTO válido
-        cobroRequestDTO = new CobroRequestDTO();
-        cobroRequestDTO.setMonto(new BigDecimal("100.00"));
-        cobroRequestDTO.setFecha(LocalDate.now());
-        cobroRequestDTO.setTurnoId(1L);
+    cobro = Cobro.builder()
+        .id(1L)
+        .monto(MONTO)
+        .fecha(requestDTO.getFecha())
+        .turno(turnoFinalizado)
+        .build();
 
-        // Configuramos un Turno válido, con estado FINALIZADO y sin cobro asignado
-        turno = new Turno();
-        turno.setId(1L);
-        turno.setEstado(EstadoTurno.FINALIZADO);
-        turno.setCobro(null);
+    responseDTO = CobroResponseDTO.builder()
+        .id(cobro.getId())
+        .monto(cobro.getMonto())
+        .fecha(cobro.getFecha())
+        .turnoId(TURNO_ID)
+        .build();
+  }
 
-        // Configuramos una entidad Cobro (sin id inicialmente, se asigna tras guardar)
-        cobro = new Cobro();
-        cobro.setMonto(cobroRequestDTO.getMonto());
-        cobro.setFecha(cobroRequestDTO.getFecha());
-        cobro.setTurno(turno);
+  /* createCobro */
 
-        // Simulamos que el cobro se guarda y se le asigna un id
-        cobro.setId(1L);
+  @Test
+  void createCobro_whenValid_returnsResponse() {
+    when(turnoRepository.findById(TURNO_ID)).thenReturn(Optional.of(turnoFinalizado));
+    when(cobroMapper.toEntity(requestDTO)).thenReturn(cobro);
+    when(cobroRepository.save(cobro)).thenReturn(cobro);
+    when(cobroMapper.toDto(cobro)).thenReturn(responseDTO);
 
-        // Configuramos el DTO de respuesta
-        cobroResponseDTO = new CobroResponseDTO();
-        cobroResponseDTO.setId(1L);
-        cobroResponseDTO.setMonto(cobro.getMonto());
-        cobroResponseDTO.setFecha(cobro.getFecha());
-        cobroResponseDTO.setTurnoId(turno.getId());
-    }
+    CobroResponseDTO result = cobroService.createCobro(requestDTO);
 
-    @Test
-    void createCobro_validRequest_returnsCobroResponseDTO() {
-        // Simulamos que se encuentra el turno
-        when(turnoRepository.findById(cobroRequestDTO.getTurnoId()))
-                .thenReturn(Optional.of(turno));
+    assertThat(result)
+        .usingRecursiveComparison()
+        .isEqualTo(responseDTO);
 
-        // Simulamos el mapeo de DTO a entidad
-        when(cobroMapper.toEntity(cobroRequestDTO)).thenReturn(cobro);
+    verify(turnoRepository).findById(TURNO_ID);
+    verify(cobroRepository).save(cobro);
+  }
 
-        // Simulamos la operación de guardado
-        when(cobroRepository.save(cobro)).thenReturn(cobro);
+  @Test
+  void createCobro_whenTurnoMissing_throws404() {
+    when(turnoRepository.findById(TURNO_ID)).thenReturn(Optional.empty());
 
-        // Simulamos el mapeo de la entidad guardada a DTO de respuesta
-        when(cobroMapper.toDto(cobro)).thenReturn(cobroResponseDTO);
+    assertThatThrownBy(() -> cobroService.createCobro(requestDTO))
+        .isInstanceOf(ResponseStatusException.class)
+        .hasMessageContaining("Turno no encontrado");
 
-        // Ejecutamos el servicio
-        CobroResponseDTO result = cobroService.createCobro(cobroRequestDTO);
+    verify(turnoRepository).findById(TURNO_ID);
+    verify(cobroRepository, never()).save(any());
+  }
 
-        // Verificamos resultados
-        assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals(new BigDecimal("100.00"), result.getMonto());
-        assertEquals(turno.getId(), result.getTurnoId());
-        verify(turnoRepository).findById(cobroRequestDTO.getTurnoId());
-        verify(cobroRepository).save(cobro);
-    }
+  @Test
+  void createCobro_whenTurnoNotFinalizado_throws400() {
+    Turno turnoPendiente = Turno.builder()
+        .id(TURNO_ID)
+        .estado(EstadoTurno.PENDIENTE)
+        .build();
+    when(turnoRepository.findById(TURNO_ID)).thenReturn(Optional.of(turnoPendiente));
 
-    @Test
-    void createCobro_turnoNotFound_throwsException() {
-        // Simulamos que no se encuentra el turno
-        when(turnoRepository.findById(cobroRequestDTO.getTurnoId())).thenReturn(Optional.empty());
+    assertThatThrownBy(() -> cobroService.createCobro(requestDTO))
+        .isInstanceOf(ResponseStatusException.class)
+        .hasMessageContaining("solo se puede realizar si el turno está finalizado");
 
-        // Verificamos que se lance la excepción con el mensaje adecuado
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            cobroService.createCobro(cobroRequestDTO);
-        });
-        assertTrue(exception.getReason().contains("Turno no encontrado con id: " + cobroRequestDTO.getTurnoId()));
-        verify(turnoRepository).findById(cobroRequestDTO.getTurnoId());
-        verify(cobroRepository, never()).save(any(Cobro.class));
-    }
+    verify(turnoRepository).findById(TURNO_ID);
+    verify(cobroRepository, never()).save(any());
+  }
 
-    @Test
-    void createCobro_turnoNotFinalized_throwsException() {
-        // Configuramos el turno con un estado distinto a FINALIZADO
-        turno.setEstado(EstadoTurno.PENDIENTE);
-        when(turnoRepository.findById(cobroRequestDTO.getTurnoId())).thenReturn(Optional.of(turno));
+  @Test
+  void createCobro_whenTurnoHasCobro_throws400() {
+    turnoFinalizado.setCobro(Cobro.builder().id(99L).build());
+    when(turnoRepository.findById(TURNO_ID)).thenReturn(Optional.of(turnoFinalizado));
 
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            cobroService.createCobro(cobroRequestDTO);
-        });
-        assertTrue(exception.getReason().contains("El cobro solo se puede realizar si el turno está finalizado"));
-        verify(turnoRepository).findById(cobroRequestDTO.getTurnoId());
-        verify(cobroRepository, never()).save(any(Cobro.class));
-    }
+    assertThatThrownBy(() -> cobroService.createCobro(requestDTO))
+        .isInstanceOf(ResponseStatusException.class)
+        .hasMessageContaining("Ya existe un cobro para este turno");
 
-    @Test
-    void createCobro_turnoAlreadyHasCobro_throwsException() {
-        // Configuramos el turno con estado FINALIZADO pero ya tiene un cobro asociado
-        Cobro existingCobro = new Cobro();
-        existingCobro.setId(2L);
-        turno.setCobro(existingCobro);
-
-        when(turnoRepository.findById(cobroRequestDTO.getTurnoId())).thenReturn(Optional.of(turno));
-
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            cobroService.createCobro(cobroRequestDTO);
-        });
-        assertTrue(exception.getReason().contains("Ya existe un cobro para este turno"));
-        verify(turnoRepository).findById(cobroRequestDTO.getTurnoId());
-        verify(cobroRepository, never()).save(any(Cobro.class));
-    }
+    verify(turnoRepository).findById(TURNO_ID);
+    verify(cobroRepository, never()).save(any());
+  }
 
 }

@@ -1,9 +1,5 @@
 package tech.munidigital.lavadero.service.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import java.time.LocalDateTime;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,83 +16,85 @@ import tech.munidigital.lavadero.entity.enums.TipoServicio;
 import tech.munidigital.lavadero.mappers.TurnoMapper;
 import tech.munidigital.lavadero.repository.TurnoRepository;
 import tech.munidigital.lavadero.repository.VehiculoRepository;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TurnoServiceImplTest {
+class TurnoServiceImplTest {
 
-    @Mock
-    private TurnoRepository turnoRepository;
+  private static final long VEHICULO_ID = 1L;
+  private static final long TURNO_ID = 10L;
+  private static final LocalDateTime FUTURE_DATE = LocalDateTime.now().plusDays(1);
 
-    @Mock
-    private VehiculoRepository vehiculoRepository;
+  @Mock
+  private TurnoRepository turnoRepository;
+  @Mock
+  private VehiculoRepository vehiculoRepository;
+  @Mock
+  private TurnoMapper turnoMapper;
 
-    @Mock
-    private TurnoMapper turnoMapper;
+  @InjectMocks
+  private TurnoServiceImpl turnoService;
 
-    @InjectMocks
-    private TurnoServiceImpl turnoService;
+  private TurnoRequestDTO requestDTO;
+  private Vehiculo vehiculo;
+  private Turno turno;
+  private TurnoResponseDTO responseDTO;
 
-    private TurnoRequestDTO turnoRequestDTO;
-    private Vehiculo vehiculo;
-    private Turno turno;
+  @BeforeEach
+  void setUp() {
+    requestDTO = TurnoRequestDTO.builder()
+        .fechaHora(FUTURE_DATE)
+        .estado(EstadoTurno.PENDIENTE)
+        .tipoServicio(TipoServicio.LAVADO_COMPLETO)
+        .vehiculoId(VEHICULO_ID)
+        .build();
 
-    @BeforeEach
-    void setUp() {
-        // Configuramos un TurnoRequestDTO con una fecha en el futuro
-        turnoRequestDTO = new TurnoRequestDTO();
-        turnoRequestDTO.setFechaHora(LocalDateTime.now().plusDays(1));
-        turnoRequestDTO.setEstado(EstadoTurno.PENDIENTE);
-        turnoRequestDTO.setTipoServicio(TipoServicio.LAVADO_COMPLETO);
-        turnoRequestDTO.setVehiculoId(1L);
+    vehiculo = Vehiculo.builder()
+        .id(VEHICULO_ID)
+        .build();
 
-        // Configuramos el vehículo simulado
-        vehiculo = new Vehiculo();
-        vehiculo.setId(1L);
+    turno = Turno.builder()
+        .id(TURNO_ID)
+        .fechaHora(FUTURE_DATE)
+        .estado(requestDTO.getEstado())
+        .tipoServicio(requestDTO.getTipoServicio())
+        .build();
 
-        // Configuramos el turno simulado
-        turno = new Turno();
-        turno.setId(1L);
-        turno.setFechaHora(turnoRequestDTO.getFechaHora());
-        turno.setEstado(turnoRequestDTO.getEstado());
-        turno.setTipoServicio(turnoRequestDTO.getTipoServicio());
-    }
+    responseDTO = TurnoResponseDTO.builder()
+        .id(TURNO_ID)
+        .build();
+  }
 
-    @Test
-    void createTurno_ValidRequest_ReturnsTurnoResponseDTO() {
-        // Simular que se encuentra el vehículo
-        when(vehiculoRepository.findById(1L)).thenReturn(Optional.of(vehiculo));
+  /* createTurno */
 
-        // Simular el mapeo de DTO a entidad
-        when(turnoMapper.toEntity(turnoRequestDTO)).thenReturn(turno);
+  @Test
+  void createTurno_whenValid_returnsResponse() {
+    when(vehiculoRepository.findById(VEHICULO_ID)).thenReturn(Optional.of(vehiculo));
+    when(turnoMapper.toEntity(requestDTO)).thenReturn(turno);
+    when(turnoRepository.save(turno)).thenReturn(turno);
+    when(turnoMapper.toDto(turno)).thenReturn(responseDTO);
 
-        // Simular la operación de guardado
-        when(turnoRepository.save(turno)).thenReturn(turno);
+    TurnoResponseDTO result = turnoService.createTurno(requestDTO);
 
-        // Simular el mapeo de la entidad guardada a DTO
-        TurnoResponseDTO turnoResponseDTO = new TurnoResponseDTO();
-        turnoResponseDTO.setId(turno.getId());
-        when(turnoMapper.toDto(turno)).thenReturn(turnoResponseDTO);
+    assertThat(result.getId()).isEqualTo(TURNO_ID);
+    verify(vehiculoRepository).findById(VEHICULO_ID);
+    verify(turnoRepository).save(turno);
+  }
 
-        // Ejecutar el servicio
-        TurnoResponseDTO result = turnoService.createTurno(turnoRequestDTO);
+  @Test
+  void createTurno_whenDateInPast_throws400() {
+    TurnoRequestDTO pastRequest = TurnoRequestDTO.builder()
+        .fechaHora(LocalDateTime.now().minusDays(1))
+        .build();
 
-        // Verificar resultados
-        assertNotNull(result);
-        assertEquals(1L, result.getId());
-        verify(vehiculoRepository).findById(1L);
-        verify(turnoRepository).save(turno);
-    }
-
-    @Test
-    void createTurno_FechaEnElPasado_ThrowsException() {
-        // Configurar la fecha en el pasado
-        turnoRequestDTO.setFechaHora(LocalDateTime.now().minusDays(1));
-
-        // Se espera que se lance una excepción de validación
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            turnoService.createTurno(turnoRequestDTO);
-        });
-        assertTrue(exception.getReason().contains("La fecha y hora no pueden ser en el pasado"));
-    }
+    assertThatThrownBy(() -> turnoService.createTurno(pastRequest))
+        .isInstanceOf(ResponseStatusException.class)
+        .hasMessageContaining("La fecha y hora no pueden ser en el pasado");
+  }
 
 }

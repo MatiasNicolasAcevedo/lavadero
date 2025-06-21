@@ -7,6 +7,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Entidad que representa a un usuario autenticable del sistema.
+ * <p>
+ * Implementa {@link UserDetails} para integrarse con Spring Security.
+ * No se manejan roles por ahora, por lo que {@code getAuthorities()} devuelve
+ * una lista vacía.
+ */
 @Entity
 @Getter
 @Setter
@@ -17,44 +24,62 @@ import java.util.List;
 @Table(name = "usuarios")
 public class User implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+  /**
+   * Identificador primario autoincremental.
+   */
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
-    private String phone;
+  private String firstName;
+  private String lastName;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
+  /**
+   * Se usa como nombre de usuario en el proceso de login.
+   */
+  private String email;
 
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
+  /**
+   * Contraseña codificada (BCrypt).
+   */
+  private String password;
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
+  private String phone;
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
+  /**
+   * No se definen roles/authorities en esta versión.
+   */
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of();
+  }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
+  @Override
+  public String getUsername() {
+    return this.email;
+  }
 
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
-    }
+  /**
+   * Todas las banderas de expiración/bloqueo se dejan habilitadas por defecto.
+   */
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 
 }

@@ -8,22 +8,23 @@ import java.util.Map;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehiculoRequestDTO {
 
-    @NotBlank(message = "El modelo es requerido")
-    private String modelo;
+  @NotBlank(message = "El modelo es requerido")
+  private String modelo;
 
-    @NotBlank(message = "La matrícula es requerida")
-    private String matricula;
+  @NotBlank(message = "La matrícula es requerida")
+  private String matricula;
 
-    @NotNull(message = "El tipo de vehículo es requerido")
-    private TipoVehiculo tipo;
+  @NotNull(message = "El tipo de vehículo es requerido")
+  private TipoVehiculo tipo;
 
-    private Map<String, Object> propiedadesAdicionales;
+  private Map<String, Object> propiedadesAdicionales;
 
-    @NotNull(message = "El id del cliente es requerido")
-    private Long clienteId;
+  @NotNull(message = "El id del cliente es requerido")
+  private Long clienteId;
 
 }

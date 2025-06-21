@@ -22,17 +22,17 @@ import tech.munidigital.lavadero.service.RegisterService;
 @RequestMapping("v1/api/auth/register")
 public class RegisterController {
 
-    private final RegisterService registerService;
+  private final RegisterService registerService;
 
-    @Operation(
-        summary = "Registrar un nuevo usuario",
-        description = "Permite registrar un nuevo usuario en el sistema enviando los datos requeridos como nombre, correo, contraseña, etc. "
-            + "Retorna una confirmación junto con datos útiles del usuario creado (como el token JWT en caso de registrarse autenticado)."
-    )
-    @PostMapping
-    public ResponseEntity<RegisterResponseDTO> register(@Valid @RequestBody RegisterRequestDTO requestDTO) {
-        RegisterResponseDTO registerResponseDTO = registerService.register(requestDTO);
-        return ResponseEntity.ok(registerResponseDTO);
-    }
+  @Operation(
+      summary = "Registrar un nuevo usuario",
+      description = "Permite registrar un nuevo usuario en el sistema enviando los datos requeridos como nombre, correo, contraseña, etc. "
+          + "Retorna una confirmación junto con datos útiles del usuario creado (como el token JWT en caso de registrarse autenticado)."
+  )
+  @PostMapping
+  public ResponseEntity<RegisterResponseDTO> register(@Valid @RequestBody RegisterRequestDTO requestDTO) {
+    RegisterResponseDTO registerResponseDTO = registerService.register(requestDTO);
+    return ResponseEntity.ok(registerResponseDTO);
+  }
 
 }

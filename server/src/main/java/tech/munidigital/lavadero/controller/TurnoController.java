@@ -22,56 +22,56 @@ import java.util.List;
 @RequestMapping("/v1/api/turnos")
 public class TurnoController {
 
-    private final TurnoService turnoService;
+  private final TurnoService turnoService;
 
-    @Operation(
-        summary = "Crear un nuevo turno",
-        description = "Registra un nuevo turno en el sistema con los datos del vehículo, cliente y servicios solicitados."
-    )
-    @PostMapping
-    public ResponseEntity<TurnoResponseDTO> createTurno(@Valid @RequestBody TurnoRequestDTO turnoRequestDTO) {
-        TurnoResponseDTO response = turnoService.createTurno(turnoRequestDTO);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
+  @Operation(
+      summary = "Crear un nuevo turno",
+      description = "Registra un nuevo turno en el sistema con los datos del vehículo, cliente y servicios solicitados."
+  )
+  @PostMapping
+  public ResponseEntity<TurnoResponseDTO> createTurno(@Valid @RequestBody TurnoRequestDTO turnoRequestDTO) {
+    TurnoResponseDTO response = turnoService.createTurno(turnoRequestDTO);
+    return new ResponseEntity<>(response, HttpStatus.CREATED);
+  }
 
-    @Operation(
-        summary = "Obtener turno por ID",
-        description = "Devuelve el detalle de un turno específico según su identificador único."
-    )
-    @GetMapping("/{id}")
-    public ResponseEntity<TurnoResponseDTO> getTurnoById(@PathVariable Long id) {
-        TurnoResponseDTO response = turnoService.getTurnoById(id);
-        return ResponseEntity.ok(response);
-    }
+  @Operation(
+      summary = "Obtener turno por ID",
+      description = "Devuelve el detalle de un turno específico según su identificador único."
+  )
+  @GetMapping("/{id}")
+  public ResponseEntity<TurnoResponseDTO> getTurnoById(@PathVariable Long id) {
+    TurnoResponseDTO response = turnoService.getTurnoById(id);
+    return ResponseEntity.ok(response);
+  }
 
-    @Operation(
-        summary = "Listar turnos por ID de vehículo",
-        description = "Devuelve todos los turnos registrados en el sistema para un vehículo determinado."
-    )
-    @GetMapping("/vehiculo/{vehiculoId}")
-    public ResponseEntity<List<TurnoResponseDTO>> getTurnosByVehiculoId(@PathVariable Long vehiculoId) {
-        List<TurnoResponseDTO> response = turnoService.getTurnosByVehiculoId(vehiculoId);
-        return ResponseEntity.ok(response);
-    }
+  @Operation(
+      summary = "Listar turnos por ID de vehículo",
+      description = "Devuelve todos los turnos registrados en el sistema para un vehículo determinado."
+  )
+  @GetMapping("/vehiculo/{vehiculoId}")
+  public ResponseEntity<List<TurnoResponseDTO>> getTurnosByVehiculoId(@PathVariable Long vehiculoId) {
+    List<TurnoResponseDTO> response = turnoService.getTurnosByVehiculoId(vehiculoId);
+    return ResponseEntity.ok(response);
+  }
 
-    @Operation(
-        summary = "Actualizar turno a EN_PROCESO",
-        description = "Modifica el estado de un turno existente a EN_PROCESO. Este cambio indica que el servicio ha comenzado."
-    )
-    @PutMapping("/{id}/en-proceso")
-    public ResponseEntity<TurnoResponseDTO> setTurnoEnProceso(@PathVariable Long id) {
-        TurnoResponseDTO response = turnoService.updateTurnoEstado(id, EstadoTurno.EN_PROCESO);
-        return ResponseEntity.ok(response);
-    }
+  @Operation(
+      summary = "Actualizar turno a EN_PROCESO",
+      description = "Modifica el estado de un turno existente a EN_PROCESO. Este cambio indica que el servicio ha comenzado."
+  )
+  @PutMapping("/{id}/en-proceso")
+  public ResponseEntity<TurnoResponseDTO> setTurnoEnProceso(@PathVariable Long id) {
+    TurnoResponseDTO response = turnoService.updateTurnoEstado(id, EstadoTurno.EN_PROCESO);
+    return ResponseEntity.ok(response);
+  }
 
-    @Operation(
-        summary = "Actualizar turno a FINALIZADO",
-        description = "Modifica el estado de un turno existente a FINALIZADO. Indica que el servicio ya fue completado."
-    )
-    @PutMapping("/{id}/finalizado")
-    public ResponseEntity<TurnoResponseDTO> setTurnoFinalizado(@PathVariable Long id) {
-        TurnoResponseDTO response = turnoService.updateTurnoEstado(id, EstadoTurno.FINALIZADO);
-        return ResponseEntity.ok(response);
-    }
+  @Operation(
+      summary = "Actualizar turno a FINALIZADO",
+      description = "Modifica el estado de un turno existente a FINALIZADO. Indica que el servicio ya fue completado."
+  )
+  @PutMapping("/{id}/finalizado")
+  public ResponseEntity<TurnoResponseDTO> setTurnoFinalizado(@PathVariable Long id) {
+    TurnoResponseDTO response = turnoService.updateTurnoEstado(id, EstadoTurno.FINALIZADO);
+    return ResponseEntity.ok(response);
+  }
 
 }

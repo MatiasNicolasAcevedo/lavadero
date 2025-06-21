@@ -1,11 +1,5 @@
 package tech.munidigital.lavadero.service.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,135 +15,142 @@ import tech.munidigital.lavadero.entity.enums.TipoVehiculo;
 import tech.munidigital.lavadero.mappers.VehiculoMapper;
 import tech.munidigital.lavadero.repository.ClienteRepository;
 import tech.munidigital.lavadero.repository.VehiculoRepository;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class VehiculoServiceImplTest {
+class VehiculoServiceImplTest {
 
-    @Mock
-    private VehiculoRepository vehiculoRepository;
+  private static final long CLIENTE_ID = 1L;
+  private static final long VEHICULO_ID = 10L;
+  private static final String MATRICULA = "ABC123";
 
-    @Mock
-    private ClienteRepository clienteRepository;
+  @Mock
+  private VehiculoRepository vehiculoRepository;
+  @Mock
+  private ClienteRepository clienteRepository;
+  @Mock
+  private VehiculoMapper vehiculoMapper;
 
-    @Mock
-    private VehiculoMapper vehiculoMapper;
+  @InjectMocks
+  private VehiculoServiceImpl vehiculoService;
 
-    @InjectMocks
-    private VehiculoServiceImpl vehiculoService;
+  private VehiculoRequestDTO requestDTO;
+  private Cliente cliente;
+  private Vehiculo entity;
+  private VehiculoResponseDTO responseDTO;
 
-    private VehiculoRequestDTO vehiculoRequestDTO;
-    private Vehiculo vehiculo;
-    private VehiculoResponseDTO vehiculoResponseDTO;
-    private Cliente cliente;
+  @BeforeEach
+  void setUp() {
 
-    @BeforeEach
-    void setUp() {
-        // Configuramos un VehiculoRequestDTO válido
-        vehiculoRequestDTO = new VehiculoRequestDTO();
-        vehiculoRequestDTO.setModelo("Modelo X");
-        vehiculoRequestDTO.setMatricula("ABC123");
-        vehiculoRequestDTO.setTipo(TipoVehiculo.SEDAN);
-        vehiculoRequestDTO.setClienteId(1L);
-        vehiculoRequestDTO.setPropiedadesAdicionales(Map.of("color", "Rojo"));
+    requestDTO = VehiculoRequestDTO.builder()
+        .modelo("Modelo X")
+        .matricula(MATRICULA)
+        .tipo(TipoVehiculo.SEDAN)
+        .clienteId(CLIENTE_ID)
+        .propiedadesAdicionales(Map.of("color", "Rojo"))
+        .build();
 
-        // Configuramos un Cliente simulado
-        cliente = new Cliente();
-        cliente.setId(1L);
-        cliente.setNombre("Cliente Test");
-        cliente.setCorreoElectronico("cliente@test.com");
-        cliente.setTelefono("1234567890");
+    cliente = Cliente.builder()
+        .id(CLIENTE_ID)
+        .nombre("Cliente Test")
+        .correoElectronico("cliente@test.com")
+        .telefono("1234567890")
+        .build();
 
-        // Configuramos la entidad Vehiculo
-        vehiculo = new Vehiculo();
-        vehiculo.setId(1L);
-        vehiculo.setModelo(vehiculoRequestDTO.getModelo());
-        vehiculo.setMatricula(vehiculoRequestDTO.getMatricula());
-        vehiculo.setTipo(vehiculoRequestDTO.getTipo());
-        vehiculo.setCliente(cliente);
-        vehiculo.setPropiedadesAdicionales(vehiculoRequestDTO.getPropiedadesAdicionales());
+    entity = Vehiculo.builder()
+        .id(VEHICULO_ID)
+        .modelo(requestDTO.getModelo())
+        .matricula(MATRICULA)
+        .tipo(TipoVehiculo.SEDAN)
+        .cliente(cliente)
+        .propiedadesAdicionales(requestDTO.getPropiedadesAdicionales())
+        .build();
 
-        // Configuramos el DTO de respuesta
-        vehiculoResponseDTO = new VehiculoResponseDTO();
-        vehiculoResponseDTO.setId(1L);
-        vehiculoResponseDTO.setModelo(vehiculo.getModelo());
-        vehiculoResponseDTO.setMatricula(vehiculo.getMatricula());
-        vehiculoResponseDTO.setTipo(vehiculo.getTipo());
-        vehiculoResponseDTO.setClienteId(cliente.getId());
-        vehiculoResponseDTO.setPropiedadesAdicionales(vehiculo.getPropiedadesAdicionales());
-    }
+    responseDTO = VehiculoResponseDTO.builder()
+        .id(VEHICULO_ID)
+        .modelo(entity.getModelo())
+        .matricula(entity.getMatricula())
+        .tipo(entity.getTipo())
+        .clienteId(CLIENTE_ID)
+        .propiedadesAdicionales(entity.getPropiedadesAdicionales())
+        .build();
+  }
 
-    @Test
-    void createVehiculo_validRequest_returnsVehiculoResponseDTO() {
-        // Simulamos que el cliente existe
-        when(clienteRepository.findById(vehiculoRequestDTO.getClienteId()))
-                .thenReturn(Optional.of(cliente));
+  /* createVehiculo */
 
-        // Simulamos el mapeo de DTO a entidad y la operación de guardado
-        when(vehiculoMapper.toEntity(vehiculoRequestDTO)).thenReturn(vehiculo);
-        when(vehiculoRepository.save(vehiculo)).thenReturn(vehiculo);
+  @Test
+  void createVehiculo_whenValid_returnsResponse() {
+    when(clienteRepository.findById(CLIENTE_ID)).thenReturn(Optional.of(cliente));
+    when(vehiculoMapper.toEntity(requestDTO)).thenReturn(entity);
+    when(vehiculoRepository.save(entity)).thenReturn(entity);
+    when(vehiculoMapper.toDto(entity)).thenReturn(responseDTO);
 
-        // Simulamos el mapeo de la entidad guardada a DTO
-        when(vehiculoMapper.toDto(vehiculo)).thenReturn(vehiculoResponseDTO);
+    VehiculoResponseDTO result = vehiculoService.createVehiculo(requestDTO);
 
-        VehiculoResponseDTO result = vehiculoService.createVehiculo(vehiculoRequestDTO);
+    assertThat(result)
+        .usingRecursiveComparison()
+        .isEqualTo(responseDTO);
 
-        assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("Modelo X", result.getModelo());
-        verify(clienteRepository).findById(vehiculoRequestDTO.getClienteId());
-        verify(vehiculoRepository).save(vehiculo);
-    }
+    verify(clienteRepository).findById(CLIENTE_ID);
+    verify(vehiculoRepository).save(entity);
+  }
 
-    @Test
-    void createVehiculo_clientNotFound_throwsException() {
-        // Simulamos que no se encuentra el cliente
-        when(clienteRepository.findById(vehiculoRequestDTO.getClienteId()))
-                .thenReturn(Optional.empty());
+  @Test
+  void createVehiculo_whenClientMissing_throws404() {
+    when(clienteRepository.findById(CLIENTE_ID)).thenReturn(Optional.empty());
 
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            vehiculoService.createVehiculo(vehiculoRequestDTO);
-        });
-        assertTrue(exception.getReason().contains("Cliente no encontrado con id: " + vehiculoRequestDTO.getClienteId()));
-        verify(clienteRepository).findById(vehiculoRequestDTO.getClienteId());
-        verify(vehiculoRepository, never()).save(any(Vehiculo.class));
-    }
+    assertThatThrownBy(() -> vehiculoService.createVehiculo(requestDTO))
+        .isInstanceOf(ResponseStatusException.class)
+        .hasMessageContaining("Cliente no encontrado");
 
-    @Test
-    void getVehiculoById_existingVehicle_returnsVehiculoResponseDTO() {
-        // Simulamos que se encuentra el vehículo
-        when(vehiculoRepository.findById(1L)).thenReturn(Optional.of(vehiculo));
-        when(vehiculoMapper.toDto(vehiculo)).thenReturn(vehiculoResponseDTO);
+    verify(clienteRepository).findById(CLIENTE_ID);
+    verify(vehiculoRepository, never()).save(any());
+  }
 
-        VehiculoResponseDTO result = vehiculoService.getVehiculoById(1L);
+  /* getVehiculoById */
 
-        assertNotNull(result);
-        assertEquals(1L, result.getId());
-        verify(vehiculoRepository).findById(1L);
-    }
+  @Test
+  void getVehiculoById_whenExists_returnsResponse() {
+    when(vehiculoRepository.findById(VEHICULO_ID)).thenReturn(Optional.of(entity));
+    when(vehiculoMapper.toDto(entity)).thenReturn(responseDTO);
 
-    @Test
-    void getVehiculoById_vehicleNotFound_throwsException() {
-        // Simulamos que no se encuentra el vehículo
-        when(vehiculoRepository.findById(1L)).thenReturn(Optional.empty());
+    VehiculoResponseDTO result = vehiculoService.getVehiculoById(VEHICULO_ID);
 
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            vehiculoService.getVehiculoById(1L);
-        });
-        assertTrue(exception.getReason().contains("Vehículo no encontrado con id: 1"));
-        verify(vehiculoRepository).findById(1L);
-    }
+    assertThat(result.getId()).isEqualTo(VEHICULO_ID);
+    verify(vehiculoRepository).findById(VEHICULO_ID);
+  }
 
-    @Test
-    void getVehiculosByClienteId_returnsListOfVehiculoResponseDTO() {
-        // Simulamos que el repositorio retorna una lista con un vehículo
-        when(vehiculoRepository.findByClienteId(cliente.getId())).thenReturn(List.of(vehiculo));
-        when(vehiculoMapper.toDto(vehiculo)).thenReturn(vehiculoResponseDTO);
+  @Test
+  void getVehiculoById_whenMissing_throws404() {
+    when(vehiculoRepository.findById(VEHICULO_ID)).thenReturn(Optional.empty());
 
-        List<VehiculoResponseDTO> result = vehiculoService.getVehiculosByClienteId(cliente.getId());
+    assertThatThrownBy(() -> vehiculoService.getVehiculoById(VEHICULO_ID))
+        .isInstanceOf(ResponseStatusException.class)
+        .hasMessageContaining("Vehículo no encontrado");
 
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        verify(vehiculoRepository).findByClienteId(cliente.getId());
-    }
+    verify(vehiculoRepository).findById(VEHICULO_ID);
+  }
+
+  /* getVehiculosByClienteId */
+
+  @Test
+  void getVehiculosByClienteId_returnsList() {
+    when(vehiculoRepository.findByClienteId(CLIENTE_ID)).thenReturn(List.of(entity));
+    when(vehiculoMapper.toDto(entity)).thenReturn(responseDTO);
+
+    List<VehiculoResponseDTO> result = vehiculoService.getVehiculosByClienteId(CLIENTE_ID);
+
+    assertThat(result)
+        .hasSize(1)
+        .first()
+        .isEqualTo(responseDTO);
+
+    verify(vehiculoRepository).findByClienteId(CLIENTE_ID);
+  }
 
 }

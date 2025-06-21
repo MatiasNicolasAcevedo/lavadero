@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class HealthCheckController {
 
-    @Operation(
-        summary = "Verificar el estado del servidor",
-        description = "Endpoint público utilizado para monitorear si el servidor está activo. "
-            + "Ideal para chequeos automáticos de salud en entornos como Render, Docker, etc."
-    )
-    @GetMapping("/health")
-    public String checkHealth() {
-        return "Server is awake and running!";
-    }
+  @Operation(
+      summary = "Verificar el estado del servidor",
+      description = "Endpoint público utilizado para monitorear si el servidor está activo. "
+          + "Ideal para chequeos automáticos de salud en entornos como Render, Docker, etc."
+  )
+  @GetMapping("/health")
+  public String checkHealth() {
+    return "Server is awake and running!";
+  }
 
 }

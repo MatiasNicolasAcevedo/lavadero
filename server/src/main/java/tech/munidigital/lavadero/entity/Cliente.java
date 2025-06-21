@@ -17,22 +17,22 @@ import java.util.List;
 @Table(name = "clientes")
 public class Cliente {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @NotBlank(message = "El nombre es requerido")
-    private String nombre;
+  @NotBlank(message = "El nombre es requerido")
+  private String nombre;
 
-    @NotBlank(message = "El correo electrónico es requerido")
-    @Email(message = "El correo electrónico debe ser válido")
-    @Column(unique = true)
-    private String correoElectronico;
+  @NotBlank(message = "El correo electrónico es requerido")
+  @Email(message = "El correo electrónico debe ser válido")
+  @Column(unique = true)
+  private String correoElectronico;
 
-    @NotBlank(message = "El teléfono es requerido")
-    private String telefono;
+  @NotBlank(message = "El teléfono es requerido")
+  private String telefono;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Vehiculo> vehiculos = new ArrayList<>();
+  @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Vehiculo> vehiculos = new ArrayList<>();
 
 }

@@ -8,20 +8,21 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class TurnoRequestDTO {
 
-    @NotNull(message = "La fecha y hora es requerida")
-    private LocalDateTime fechaHora;
+  @NotNull(message = "La fecha y hora es requerida")
+  private LocalDateTime fechaHora;
 
-    @NotNull(message = "El estado del turno es requerido")
-    private EstadoTurno estado;
+  @NotNull(message = "El estado del turno es requerido")
+  private EstadoTurno estado;
 
-    @NotNull(message = "El tipo de servicio es requerido")
-    private TipoServicio tipoServicio;
+  @NotNull(message = "El tipo de servicio es requerido")
+  private TipoServicio tipoServicio;
 
-    @NotNull(message = "El id del vehículo es requerido")
-    private Long vehiculoId;
+  @NotNull(message = "El id del vehículo es requerido")
+  private Long vehiculoId;
 
 }

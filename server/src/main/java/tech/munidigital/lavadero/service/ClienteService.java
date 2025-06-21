@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface ClienteService {
 
-    ClienteResponseDTO createCliente(ClienteRequestDTO clienteRequestDTO);
-    ClienteResponseDTO getClienteById(Long id);
-    List<ClienteResponseDTO> getAllClientes();
+  ClienteResponseDTO createCliente(ClienteRequestDTO clienteRequestDTO);
+
+  ClienteResponseDTO getClienteById(Long id);
+
+  List<ClienteResponseDTO> getAllClientes();
 
 }

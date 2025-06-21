@@ -7,15 +7,16 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class TurnoResponseDTO {
 
-    private Long id;
-    private LocalDateTime fechaHora;
-    private EstadoTurno estado;
-    private TipoServicio tipoServicio;
-    private Long vehiculoId;
-    private CobroResponseDTO cobro;
+  private Long id;
+  private LocalDateTime fechaHora;
+  private EstadoTurno estado;
+  private TipoServicio tipoServicio;
+  private Long vehiculoId;
+  private CobroResponseDTO cobro;
 
 }
