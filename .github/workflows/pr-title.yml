@@ -1,0 +1,36 @@
+# Valida que el título del PR sea un Conventional Commit (se mergea con squash y queda en main).
+name: PR title
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  conventional-title:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            test
+            refactor
+            chore
+            docs
+            ci
+            build
+            perf
+          scopes: |
+            server
+            client
+            ci
+            docs
+            board
+            deps
+          requireScope: false
