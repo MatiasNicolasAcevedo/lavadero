@@ -2,10 +2,10 @@
 > Reglas: máx. 2 PR abiertos a la vez · una tarea con PR abierto o rama remota `*/T-NNN-*` está tomada ·
 > tomar la primera de "Listas" cuyo agente coincida y cuyas dependencias estén hechas ·
 > formato: `- T-NNN · Pn · S/M/L · 🤖 ligero|🧠 frontera|👤 dueño · Título → [tarea](tasks/T-NNN-slug.md)`
-> Próximo ID libre: T-016
+> Próximo ID libre: T-017
 
 ## 🔨 En curso / en revisión (con su PR)
-- (vacío)
+- T-016 · P0 · M · 🧠 frontera · Alinear el harness con el prompt de bootstrap v3 → [tarea](tasks/T-016-align-harness-v3.md) · PR: (draft)
 
 ## ✅ Listas (ordenadas por prioridad, máx. 10)
 - T-001 · P0 · S · 🤖 ligero · Hacer que el lint del front pase sin warnings → [tarea](tasks/T-001-fix-client-lint-warnings.md)
