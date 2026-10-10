@@ -59,3 +59,7 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Harness (scripts/)
+.verify-logs/
+.dev-logs/
