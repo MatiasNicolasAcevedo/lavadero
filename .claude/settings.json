@@ -24,7 +24,7 @@
       "Bash(gh pr checks:*)"
     ],
     "deny": [
-      "Read(./server/env.properties)",
+      "Read(./server/src/main/resources/env.properties)",
       "Read(./**/.env)",
       "Bash(git push --force:*)",
       "Bash(git push -f:*)",

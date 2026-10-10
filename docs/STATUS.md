@@ -19,8 +19,8 @@ Funciona de punta a punta en local con JDK 17; harness y tablero listos. Falta e
 P0 Estabilizar · 0/15 tareas · ver [ROADMAP](ROADMAP.md)
 
 ## Foco
-- PRs abiertos: #33 T-000 bootstrap (esperando revisión del dueño)
-- **Próximo paso exacto:** dueño revisa y mergea #33 (squash); después, sesión nueva con `docs/agents/implementer.md` → toma T-001. En paralelo: dueño hace T-010 y responde las decisiones de abajo. Tras el merge: `git tag audit/2026-10-10 origin/main && git push origin audit/2026-10-10`.
+- PRs abiertos: ninguno
+- **Próximo paso exacto:** sesión nueva con `docs/agents/implementer.md` → toma T-001. En paralelo: dueño hace T-010 (protección de `main`), rota el secreto (T-005) y responde las decisiones de abajo.
 
 ## Decisiones pendientes del dueño
 - ¿El `SECRET` de Render es el valor que estaba commiteado? Si sí, rotarlo ya (T-005).
@@ -30,4 +30,4 @@ P0 Estabilizar · 0/15 tareas · ver [ROADMAP](ROADMAP.md)
 - Licencia del repo (MIT sugerida) · ¿cuenta bot / GitHub App para revisiones formales?
 
 ## Últimas sesiones (máx. 5; las anteriores → archive/log/AAAA-MM.md)
-- 2026-10-10 · Claude (frontera) · auditó T-000 · auditoría + harness + tablero P0 (15 tareas) · PR #33
+- 2026-10-10 · Claude (frontera) · auditó T-000 · auditoría + harness + tablero P0 (15 tareas) · PR #33 (revisado en la misma sesión y mergeado a pedido del dueño)

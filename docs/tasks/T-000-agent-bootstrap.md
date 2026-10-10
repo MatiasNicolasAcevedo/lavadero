@@ -1,5 +1,5 @@
 # T-000 · Auditoría inicial y harness para agentes
-- Estado: En revisión · Prioridad: P0 · Esfuerzo: L · Agente: 🧠 frontera
+- Estado: Hecha · Prioridad: P0 · Esfuerzo: L · Agente: 🧠 frontera
 - Fase: P0 Estabilizar
 - Rama: `claude/new-session-cj7dg4` (impuesta por el entorno de la sesión) · Depende de: — · Spec/ADR: [0001](../adr/0001-testcontainers-postgres-over-h2.md), [0002](../adr/0002-spring-boot-upgrade-path.md)
 - Revisa: ligero (segunda mirada) + dueño

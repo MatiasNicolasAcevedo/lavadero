@@ -5,7 +5,7 @@
 > Próximo ID libre: T-016
 
 ## 🔨 En curso / en revisión (con su PR)
-- T-000 · P0 · L · 🧠 frontera · Auditoría inicial y harness para agentes → [tarea](tasks/T-000-agent-bootstrap.md) · PR #33
+- (vacío)
 
 ## ✅ Listas (ordenadas por prioridad, máx. 10)
 - T-001 · P0 · S · 🤖 ligero · Hacer que el lint del front pase sin warnings → [tarea](tasks/T-001-fix-client-lint-warnings.md)
@@ -65,4 +65,4 @@ P3 Pulir
 - Mutation testing puntual (PIT / Stryker) · P3 · 🧠
 
 ## 🏁 Hecho reciente (máx. 10; las más viejas → archive/tasks/)
-- (vacío)
+- T-000 · Auditoría inicial y harness para agentes · 2026-10-10 · PR #33
