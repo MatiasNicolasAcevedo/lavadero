@@ -1,8 +1,8 @@
 # T-NNN · <Título en imperativo>
-- Estado: Lista · Prioridad: P0–P3 · Esfuerzo: S/M/L · Agente: 🤖 ligero | 🧠 frontera
+- Estado: Lista · Prioridad: P0–P3 · Esfuerzo: S/M/L · Ejecuta: 🤖 agente gratuito | 🧠 modelo de frontera | 👤 dueño
 - Fase: <P0 Estabilizar | P1 Actualizar | P2 Terminar | P3 Pulir>
-- Rama: `<tipo>/T-NNN-slug` · Depende de: T-NNN · Spec/ADR: <links o "—">
-- Revisa: <ligero | frontera | dueño>
+- Rama: `<tipo>/T-NNN-slug` (crearla desde `main` actualizado antes del primer commit) · Depende de: T-NNN · Spec/ADR: <links o "—">
+- Revisa: <🤖 agente gratuito (chat nuevo) | 🧠 modelo de frontera | 👤 dueño> (según la matriz de CONTRIBUTING § 4)
 
 ## Por qué
 <2–4 líneas: problema y evidencia (archivo:línea o hallazgo de la auditoría)>
@@ -32,10 +32,22 @@
 - [ ] `./scripts/verify.sh` pasa y la cobertura no baja
 - [ ] <comando o prueba concreta con resultado esperado>
 - [ ] <comportamiento observable cubierto por `XTest#metodo`>
-- [ ] Si cambió cómo se levanta o configura el proyecto: README/SETUP actualizados y probados
+- [ ] Si cambió la configuración o cómo se levanta: `.example`, compose, README y SETUP actualizados y probados
 
 ## Notas de implementación  _(las completa quien implementa; también antes de compactar)_
 - Hecho: ... · Pendiente: ... · Próximo paso: ...
 
 ## Resultado  _(al cerrar)_
 - PR: #N · Qué cambió: ... · Tests agregados: ... · Pendientes → nuevas tareas: T-NNN
+
+<!--
+Reglas para quien escribe la tarea (🧠). Borrar este bloque al crearla.
+- Definición de Listo (para "Listas" como 🤖): esfuerzo S o M y diff < ~400 líneas / < ~8 archivos; sin decisiones
+  de diseño abiertas; tests con un test de referencia del mismo tipo; "Leer antes" + "Archivos previstos" + AGENTS.md
+  + STATUS.md + BACKLOG.md < ~40 % del contexto del 🤖 (~64K → `wc -c` total < ~90 KB); criterios verificables por
+  comando o test; dependencias hechas.
+- Va como 🧠: versión mayor, infra de tests/CI/contenedores, seguridad/autenticación, modelo de datos, refactors
+  transversales, arquitectura, tareas que el 🤖 escaló. Ante la duda, 🧠.
+- Definición de Hecho: tests en el PR; verify.sh y CI en verde; cobertura no baja; criterios marcados; Notas y
+  Resultado; .example/README/SETUP al día; tablero y STATUS en el PR; revisión aprobada; squash merge.
+-->

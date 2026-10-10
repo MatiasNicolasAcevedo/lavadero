@@ -1,6 +1,8 @@
-# Protocolo · Auditoría periódica (agente de frontera)
+# Protocolo · Auditoría periódica
 
-Cuándo: cada 5–10 PR mergeados, antes de un cambio grande (migración de versión, nueva fase) o con 2+ tareas bloqueadas por `requiere 🧠`. Trabajá por bloques; al terminar cada uno, persistí y commiteá en la rama `docs/audit-AAAA-MM-DD`. Si el contexto está cargado entre bloques, decile al usuario:
+**Lo usa: solo 🧠 modelo de frontera.** Si sos el 🤖 agente gratuito, no audites: terminá con el traspaso «**Próximo paso:** auditoría periódica · **ejecuta: 🧠 modelo de frontera** · **Qué hacer:** abrí una sesión nueva de Claude Code y escribí: «Seguí `docs/agents/auditor.md`»».
+
+Cuándo: cada 5–10 PR mergeados, antes de un cambio grande (migración de versión, nueva fase) o con 2+ tareas bloqueadas por `requiere 🧠`. Trabajá por bloques; al terminar cada uno, persistí y commiteá en la rama `docs/audit-AAAA-MM-DD`. Si el contexto está cargado entre bloques, decile al dueño:
 `/compact Conservar: auditoría AAAA-MM-DD, rama y PR, bloque N terminado, hallazgos ya volcados al archivo y próximo bloque. Descartar: salidas de comandos y archivos leídos.` → «después escribime "seguí la auditoría desde el bloque N"».
 
 ## Bloque A · Situación
@@ -15,17 +17,17 @@ Cuándo: cada 5–10 PR mergeados, antes de un cambio grande (migración de vers
 
 ## Bloque C · Salud
 7. Cobertura: medila, compará con el umbral; si creció, subí el umbral (redondeando hacia abajo) en el mismo PR. Tests lentos o inestables → tareas.
-8. Onboarding: seguí el paso a paso del README desde un clon limpio (`git clone` en una carpeta temporal, sin `.env` ni dependencias). Corregí lo que falle o esté desactualizado y actualizá la línea "Verificado el …".
+8. Onboarding: seguí el README desde un clon limpio (`git clone` en una carpeta temporal, sin `.env` ni dependencias) **en los dos modos**: contenedores (`docker compose --profile app up`) y desarrollo (`./scripts/dev.sh`). `.example` completos. Corregí lo que falle o esté desactualizado y actualizá la línea "Verificado el …".
 9. Deriva documental: `README`, `AGENTS.md`, `CONTRIBUTING.md`, `TESTING.md`, `ARCHITECTURE.md`, `SETUP.md` y los comandos siguen siendo ciertos; límites de tamaño respetados. Commit.
 
 ## Bloque D · Resolver y replanificar
 10. Decisiones pendientes del dueño: si ya respondió, escribí el ADR y desbloqueá tareas.
-11. Tareas `🧠` prioritarias: cada una en su rama y PR, idealmente en su propia sesión (no en la de la auditoría si el contexto ya está cargado).
+11. Tareas 🧠 prioritarias: **de a una** (máx. 1 PR de tarea abierto), cada una en su rama y PR, idealmente en su propia sesión (no en la de la auditoría si el contexto ya está cargado).
 12. Relevamiento liviano de las 14 dimensiones de la auditoría inicial, **solo** en lo que cambió.
-13. Replanificar: repriorizar; refinar Backlog → Listas hasta 5–10 tareas (mayoría 🤖, cumpliendo la Definición de Listo); partir tareas grandes; actualizar `ROADMAP.md`; si se cerró una fase, proponer release (`CONTRIBUTING.md` § 7).
-14. Ajustar el sistema: si el agente ligero o el revisor fallaron repetidamente en algo, o las sesiones compactan seguido (tareas demasiado grandes), mejorar `AGENTS.md`, plantillas o protocolos sin pasar sus límites de tamaño. Commit.
+13. Replanificar: reordenar la cola ("Listas" en orden de ejecución, "Bloqueadas" en orden de entrada; agrupar 🤖 seguidas sin postergar nada 🔴); refinar Backlog → Listas hasta 5–10 tareas (al menos 3–5 🤖, cumpliendo la Definición de Listo de `docs/agents/templates/task.md`); partir tareas grandes; actualizar `ROADMAP.md`; si se cerró una fase, proponer release (`CONTRIBUTING.md` § 7).
+14. Ajustar el sistema: si el 🤖 agente gratuito o el revisor fallaron repetidamente en algo, o las sesiones compactan seguido (tareas demasiado grandes), mejorar `AGENTS.md`, plantillas o protocolos sin pasar sus límites de tamaño. Commit.
 
 ## Cierre
-15. `docs/STATUS.md` actualizado (salud, fase, próximo paso exacto, "Últimas sesiones"); archivar lo que exceda los límites (`docs/archive/`).
+15. `docs/STATUS.md` actualizado (salud, fase, PR abierto, Próximo paso / Qué hacer / Después, "Últimas sesiones"); archivar lo que exceda los límites (`docs/archive/`).
 16. PR `docs: periodic audit AAAA-MM-DD`. Después del merge, el dueño crea el tag: `git tag audit/AAAA-MM-DD origin/main && git push origin audit/AAAA-MM-DD`.
-17. Respuesta final (máx. 8 líneas): estado, top 5 hallazgos, tareas nuevas, decisiones para el dueño, PR. Sugerí sesión nueva: «Seguí `docs/agents/implementer.md`».
+17. Respuesta final (máx. 8 líneas): estado, top 5 hallazgos, tareas nuevas, decisiones para el dueño, PR. Cerrá con el formato de `AGENTS.md` § Traspasos: primero «👤 dueño: revisá y mergeá el PR de la auditoría» y después la primera tarea de la cola con su ejecutor y la frase exacta.

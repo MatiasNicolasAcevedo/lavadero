@@ -1,8 +1,8 @@
 # T-009 · Completar los tests de TurnoServiceImpl
-- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Agente: 🤖 ligero
+- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Ejecuta: 🤖 agente gratuito
 - Fase: P0 Estabilizar
-- Rama: `test/T-009-complete-turno-service-tests` · Depende de: — · Spec/ADR: —
-- Revisa: ligero
+- Rama: `test/T-009-complete-turno-service-tests` (crearla desde `main` actualizado antes del primer commit) · Depende de: — · Spec/ADR: —
+- Revisa: 🤖 agente gratuito (chat nuevo)
 
 ## Por qué
 `TurnoServiceImplTest` tiene 2 tests (alta OK y fecha pasada). No hay tests para vehículo inexistente, consultas ni cambio de estado (flujo crítico 7, auditoría §4.7).

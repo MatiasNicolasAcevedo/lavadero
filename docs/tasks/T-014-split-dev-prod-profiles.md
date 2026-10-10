@@ -1,8 +1,8 @@
 # T-014 · Separar configuración de desarrollo y producción
-- Estado: Bloqueada (decisión del dueño) · Prioridad: P0 · Esfuerzo: M · Agente: 🧠 frontera
+- Estado: Bloqueada (decisión del dueño) · Prioridad: P0 · Esfuerzo: M · Ejecuta: 🧠 modelo de frontera
 - Fase: P0 Estabilizar
-- Rama: `refactor/T-014-split-dev-prod-profiles` · Depende de: decisión del dueño, T-006 · Spec/ADR: crear ADR 0003 con la decisión
-- Revisa: ligero (segunda mirada) + dueño
+- Rama: `refactor/T-014-split-dev-prod-profiles` (crearla desde `main` actualizado antes del primer commit) · Depende de: decisión del dueño, T-006 · Spec/ADR: crear ADR 0003 con la decisión
+- Revisa: 🧠 modelo de frontera (sesión nueva, o sub-agente si el dueño lo pide) + 👤 dueño
 
 ## Por qué
 Una sola configuración para todo (auditoría §4.3, §4.6): `ddl-auto=create` en prod borra la base en cada reinicio (`application.properties:11`); el seed (`config/DataInitializer.java`) corre siempre; logging DEBUG de security/web/jackson siempre (`:22-24`); `ServerWakeUpScheduler` pega a Render cada 14 min también desde local y tests (`util/ServerWakeUpScheduler.java:24,38`).

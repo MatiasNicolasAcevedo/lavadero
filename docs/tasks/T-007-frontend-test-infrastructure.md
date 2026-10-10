@@ -1,8 +1,8 @@
 # T-007 · Infraestructura de tests del front: Vitest + Testing Library + MSW
-- Estado: Lista · Prioridad: P0 · Esfuerzo: M · Agente: 🧠 frontera
+- Estado: Lista · Prioridad: P0 · Esfuerzo: M · Ejecuta: 🧠 modelo de frontera
 - Fase: P0 Estabilizar
-- Rama: `test/T-007-frontend-test-infrastructure` · Depende de: — (idealmente después de T-001 y T-003) · Spec/ADR: —
-- Revisa: ligero (segunda mirada) + dueño
+- Rama: `test/T-007-frontend-test-infrastructure` (crearla desde `main` actualizado antes del primer commit) · Depende de: — (idealmente después de T-001 y T-003) · Spec/ADR: —
+- Revisa: 🧠 modelo de frontera (sesión nueva, o sub-agente si el dueño lo pide) + 👤 dueño
 
 ## Por qué
 El front no tiene runner ni tests (auditoría §4.7): ninguna tarea 🤖 de front puede traer tests ni hay un ejemplo para copiar. El proyecto ya usa Vite, así que no hace falta ADR de migración desde CRA.

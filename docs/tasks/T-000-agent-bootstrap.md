@@ -1,8 +1,8 @@
 # T-000 · Auditoría inicial y harness para agentes
-- Estado: Hecha · Prioridad: P0 · Esfuerzo: L · Agente: 🧠 frontera
+- Estado: Hecha · Prioridad: P0 · Esfuerzo: L · Ejecuta: 🧠 modelo de frontera
 - Fase: P0 Estabilizar
 - Rama: `claude/new-session-cj7dg4` (impuesta por el entorno de la sesión) · Depende de: — · Spec/ADR: [0001](../adr/0001-testcontainers-postgres-over-h2.md), [0002](../adr/0002-spring-boot-upgrade-path.md)
-- Revisa: ligero (segunda mirada) + dueño
+- Revisa: 🧠 modelo de frontera (en la misma sesión, a pedido del dueño) + 👤 dueño
 
 ## Por qué
 Proyecto de 2025 sin docs para retomarlo, sin gate de verificación ni CI, y con un README que no permite levantarlo.

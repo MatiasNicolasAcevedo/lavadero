@@ -1,8 +1,8 @@
 # T-005 · Sacar el secreto JWT del repo y rotarlo
-- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Agente: 🧠 frontera (+ acción del dueño)
+- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Ejecuta: 🧠 modelo de frontera (+ acción del dueño)
 - Fase: P0 Estabilizar
-- Rama: `fix/T-005-remove-committed-jwt-secret` · Depende de: — · Spec/ADR: —
-- Revisa: ligero (segunda mirada) + dueño
+- Rama: `fix/T-005-remove-committed-jwt-secret` (crearla desde `main` actualizado antes del primer commit) · Depende de: — · Spec/ADR: —
+- Revisa: 🧠 modelo de frontera (sesión nueva, o sub-agente si el dueño lo pide) + 👤 dueño
 
 ## Por qué
 🔴 El valor de `SECRET` (clave HMAC de los JWT) está commiteado en `server/src/main/resources/application.properties:34` y `:48` (comentado) y estuvo en `README.md` (quitado en T-000). Sigue en el historial de git. Si Render usa ese valor, cualquiera puede firmar tokens válidos para cualquier usuario (auditoría §4.6).

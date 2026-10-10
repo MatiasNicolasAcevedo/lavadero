@@ -33,8 +33,9 @@ Ejemplos: `fix(client): add useCallback to fetchers in dashboard` · `test(serve
 ## 3. Pull requests
 
 - **Un PR por tarea**, chico (orientativo < 400 líneas sin lockfiles ni generados). Si crece, se parte la tarea.
+- **Uno abierto a la vez:** no se empieza otra tarea hasta que el PR anterior se mergea o se cierra. La próxima tarea es siempre la primera de la cola (`docs/BACKLOG.md`).
 - **Título = Conventional Commit** (lo valida `.github/workflows/pr-title.yml`), porque se mergea con squash y queda como commit en `main`.
-- Se abre en **draft apenas se crea la rama** (con el commit `docs(board): start T-NNN`): así la tarea queda tomada y visible.
+- Se abre en **draft apenas se crea la rama** (con el commit `docs(board): start T-NNN`): así la tarea queda tomada y visible. El 🤖 agente gratuito no tiene `gh`: pushea la rama y le deja al dueño el link `https://github.com/MatiasNicolasAcevedo/lavadero/compare/main...<rama>?expand=1` con título y cuerpo listos; el dueño lo abre como draft.
 - Pasa a **ready for review** con `./scripts/verify.sh` en verde y la descripción completa según `.github/pull_request_template.md`: tarea, qué y por qué, cómo se verificó, capturas desktop (1280 px) + mobile (375 px) si hay UI, riesgos.
 - En el mismo PR: archivo de tarea ("Notas" y "Resultado"), `docs/BACKLOG.md` y `docs/STATUS.md` actualizados.
 
@@ -42,20 +43,22 @@ Ejemplos: `fix(client): add useCallback to fetchers in dashboard` · `test(serve
 
 Todo PR lo revisa un agente **en una sesión nueva** con [docs/agents/reviewer.md](docs/agents/reviewer.md):
 
-| PR | Implementa | Revisa |
-|---|---|---|
-| Tarea 🤖 de esfuerzo S, sin riesgo | ligero | ligero en sesión nueva |
-| Tarea 🤖 M, o que toca back y front, seguridad, datos o CI | ligero | frontera |
-| Tarea 🧠 | frontera | ligero en sesión nueva (segunda mirada) + dueño |
-| Dependabot | bot | ligero; si es versión mayor → tarea 🧠 |
+| PR | Implementa | Revisa | Quién lanza la revisión |
+|---|---|---|---|
+| Tarea 🤖 S, sin riesgo | 🤖 agente gratuito | 🤖 agente gratuito, **chat nuevo** | 👤 abre el chat nuevo |
+| Tarea 🤖 M, o que toca back y front, seguridad, datos, configuración o CI | 🤖 agente gratuito | 🧠 modelo de frontera | 👤 abre una sesión de frontera |
+| Tarea 🧠 | 🧠 modelo de frontera | 🧠 sesión nueva o sub-agente (si el dueño lo pide) + 👤 | 👤 |
+| Dependabot | bot | 🤖; versión mayor → tarea 🧠 | 👤 |
 
-- Máximo **2 rondas** de cambios; después se escala a frontera o al dueño.
+- La tarea dice en `Revisa:` quién revisa, y la respuesta final de quien implementó le dice al dueño qué abrir y qué escribir (formato de traspaso en `AGENTS.md`).
+- Máximo **2 rondas** de cambios; después se escala a 🧠 o al dueño.
 - Veredicto explícito: `APROBADO` / `CAMBIOS REQUERIDOS` / `ESCALAR A 🧠/DUEÑO`.
-- Limitación de GitHub: con la misma cuenta no se puede aprobar formalmente el propio PR. Sin cuenta bot, la revisión se publica como **comentario** con el veredicto en la primera línea.
+- Limitación de GitHub: con la misma cuenta no se puede aprobar formalmente el propio PR. Sin cuenta bot, la revisión se publica como **comentario** con el veredicto en la primera línea (el 🤖, sin `gh`, deja el texto y lo pega el dueño).
+- **Revisión con sub-agente (solo si el dueño lo pide para ese PR**, p. ej. «revisá y mergeá el PR #N»): el 🧠 lanza un sub-agente con contexto limpio que sigue `reviewer.md` (§ 6b), publica el veredicto en el PR y, si es `APROBADO` con CI en verde (sin CI: `verify.sh` sin regresiones respecto de `main`), mergea con squash y borra la rama. Con `CAMBIOS REQUERIDOS`, el 🧠 corrige en la misma rama y relanza (máx. 2 rondas; después, al dueño). Si el pedido no dice "mergeá", no se mergea.
 
 ## 5. Merge
 
-- **Squash merge**, solo con CI en verde y revisión `APROBADO`. Lo hace el dueño.
+- **Squash merge**, solo con CI en verde y revisión `APROBADO`. Lo hace el dueño, o el 🧠 cuando el dueño se lo pide para ese PR (revisión con sub-agente, § 4).
 - Borrar la rama después del merge.
 - Si el PR se cierra sin mergear, el siguiente PR que toque el tablero devuelve la tarea a "Listas" o "Bloqueadas" con el motivo.
 
@@ -78,3 +81,9 @@ Las auditorías se marcan con `audit/AAAA-MM-DD` después de mergear su PR.
 - Dependabot (`.github/dependabot.yml`, se activa en T-015 cuando CI esté en verde): Maven, npm y GitHub Actions, semanal, minor/patch agrupados.
 - Los PR de Dependabot se revisan como cualquier otro; una versión mayor se convierte en tarea 🧠 con su ADR si cambia la arquitectura.
 - Nunca subir versiones mayores "de paso" en otra tarea.
+
+## 9. Configuración de ejemplo
+
+- Todo archivo de configuración con valores por entorno tiene su `.example` commiteado; el archivo real está en `.gitignore`.
+- Todo cambio que agregue o renombre una variable actualiza **en el mismo PR**: su `.example`, el README (§ Configurar variables de entorno), la tabla de [docs/SETUP.md](docs/SETUP.md) y `docker-compose.yml`.
+- Los valores de ejemplo son solo para local, válidos tal cual (copiar sin editar) y nunca los reales.

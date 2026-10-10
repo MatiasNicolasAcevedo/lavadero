@@ -1,8 +1,8 @@
 # T-001 · Hacer que el lint del front pase sin warnings
-- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Agente: 🤖 ligero
+- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Ejecuta: 🤖 agente gratuito
 - Fase: P0 Estabilizar
-- Rama: `fix/T-001-fix-client-lint-warnings` · Depende de: — · Spec/ADR: —
-- Revisa: ligero
+- Rama: `fix/T-001-fix-client-lint-warnings` (crearla desde `main` actualizado antes del primer commit) · Depende de: — · Spec/ADR: —
+- Revisa: 🤖 agente gratuito (chat nuevo)
 
 ## Por qué
 `npm run lint` falla (`--max-warnings 0`) con 4 warnings, así que `scripts/verify.sh` y la futura CI quedan en rojo (auditoría §4.10): 3× `react-hooks/exhaustive-deps` y 1× `react-refresh/only-export-components`.

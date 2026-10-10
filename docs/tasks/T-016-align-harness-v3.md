@@ -36,7 +36,11 @@ Cierre
 - [ ] T-016 en "Hecho reciente" y PR en ready
 
 ## Notas de implementación
-- Hecho: … · Pendiente: … · Próximo paso: …
+- Hecho (PC-A parcial): protocolos `implementer`/`reviewer`/`auditor` en v3 (traspasos, paso 0, solo 🧠, link de comparación, cola detenida al escalar, sub-agente 6/6b); `AGENTS.md` (ejecutores, traspasos, protocolo, contexto, § Configuración); `CONTRIBUTING.md` (1 PR abierto, matriz con "Quién lanza", sub-agente, § 9); plantilla de tarea; 16 tareas con `Ejecuta:`/`Revisa:`; T-003 con `client/.env.example` y criterio `--profile app`; `BACKLOG.md` con reglas v3 y cola numerada.
+- Agente de IntelliJ: ⚠️ no verificado (red bloquea alibabacloud/aliyun). Candidatos: Lingma/Qoder CN (`.lingma/rules/`), Qwen Code por ACP (`QWEN.md`), AI Assistant + Qwen local (`.aiassistant/rules/`). Decisión: sin puntero nuevo, frase de arranque «Leé `AGENTS.md` y seguí …»; `QWEN.md` se conserva (sirve si es Qwen Code).
+- Pendiente PC-A: `SETUP.md` § agente de IntelliJ (reemplazar "Agente ligero"), auditoría (§5 supuestos + "Contexto inferido"), `STATUS.md` formato v3, `QWEN.md` a una línea.
+- Pendiente PC-B: compose en la raíz (`db`; `server`/`client` profile `app`), `server/Dockerfile.dev` (temurin), `client/Dockerfile.dev`, `.dockerignore`, scripts, README § variables + Opción A, SETUP col. prod, verificación desde clon, tag/rama (brecha 10). Cierre según la tarea.
+- Próximo paso: seguir con `SETUP.md` § agente y la auditoría.
 
 ## Resultado
 - PR: #… · Qué cambió: … · Tests agregados: — · Pendientes → nuevas tareas: …

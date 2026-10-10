@@ -1,32 +1,34 @@
 # Tablero
-> Reglas: máx. 2 PR abiertos a la vez · una tarea con PR abierto o rama remota `*/T-NNN-*` está tomada ·
-> tomar la primera de "Listas" cuyo agente coincida y cuyas dependencias estén hechas ·
-> formato: `- T-NNN · Pn · S/M/L · 🤖 ligero|🧠 frontera|👤 dueño · Título → [tarea](tasks/T-NNN-slug.md)`
+> Reglas: **una tarea a la vez** (máx. 1 PR de tarea abierto) · "Listas" es la **cola en orden de ejecución**: se toma siempre la primera ·
+> si la primera no te corresponde (🧠 o 👤), no saltees a la siguiente: avisá con el formato de "Traspasos" (`AGENTS.md`) y terminá ·
+> una tarea escalada (`requiere 🧠` / `requiere 👤`) va primera en "Bloqueadas" y **detiene la cola** hasta resolverse ·
+> las 👤 que no bloquean nada van al final de "Listas" con "(no bloquea la cola)" y se saltean ·
+> formato: `- T-NNN · Pn · S/M/L · 🤖 gratuito|🧠 frontera|👤 dueño · Título → [tarea](tasks/T-NNN-slug.md)`
 > Próximo ID libre: T-017
 
 ## 🔨 En curso / en revisión (con su PR)
-- T-016 · P0 · M · 🧠 frontera · Alinear el harness con el prompt de bootstrap v3 → [tarea](tasks/T-016-align-harness-v3.md) · PR: (draft)
+- T-016 · P0 · M · 🧠 frontera · Alinear el harness con el prompt de bootstrap v3 → [tarea](tasks/T-016-align-harness-v3.md) · PR #34
 
-## ✅ Listas (ordenadas por prioridad, máx. 10)
-- T-001 · P0 · S · 🤖 ligero · Hacer que el lint del front pase sin warnings → [tarea](tasks/T-001-fix-client-lint-warnings.md)
-- T-005 · P0 · S · 🧠 frontera · Sacar el secreto JWT del repo y rotarlo → [tarea](tasks/T-005-remove-committed-jwt-secret.md)
-- T-010 · P0 · S · 👤 dueño · Proteger `main` y limpiar ramas → [tarea](tasks/T-010-protect-main-branch.md)
-- T-003 · P0 · S · 🤖 ligero · Configurar la URL de la API del front por entorno → [tarea](tasks/T-003-configure-api-base-url.md)
-- T-002 · P0 · S · 🤖 ligero · Actualizar Lombok para compilar con JDK 21 → [tarea](tasks/T-002-upgrade-lombok-for-jdk21.md)
-- T-004 · P0 · S · 🤖 ligero · Quitar dependencias sin uso del front → [tarea](tasks/T-004-remove-unused-client-deps.md)
-- T-006 · P0 · M · 🧠 frontera · Infraestructura de tests del back: Testcontainers + JaCoCo → [tarea](tasks/T-006-backend-test-infrastructure.md)
-- T-008 · P0 · S · 🤖 ligero · Tests de caracterización de login y registro → [tarea](tasks/T-008-characterize-auth-services.md)
-- T-009 · P0 · S · 🤖 ligero · Completar los tests de TurnoServiceImpl → [tarea](tasks/T-009-complete-turno-service-tests.md)
-- T-007 · P0 · M · 🧠 frontera · Infraestructura de tests del front: Vitest + RTL + MSW → [tarea](tasks/T-007-frontend-test-infrastructure.md)
+## ✅ Listas (cola en orden de ejecución, máx. 10)
+1. T-005 · P0 · S · 🧠 frontera · Sacar el secreto JWT del repo y rotarlo → [tarea](tasks/T-005-remove-committed-jwt-secret.md)
+2. T-001 · P0 · S · 🤖 gratuito · Hacer que el lint del front pase sin warnings → [tarea](tasks/T-001-fix-client-lint-warnings.md)
+3. T-003 · P0 · S · 🤖 gratuito · Configurar la URL de la API del front por entorno → [tarea](tasks/T-003-configure-api-base-url.md)
+4. T-002 · P0 · S · 🤖 gratuito · Actualizar Lombok para compilar con JDK 21 → [tarea](tasks/T-002-upgrade-lombok-for-jdk21.md)
+5. T-004 · P0 · S · 🤖 gratuito · Quitar dependencias sin uso del front → [tarea](tasks/T-004-remove-unused-client-deps.md)
+6. T-008 · P0 · S · 🤖 gratuito · Tests de caracterización de login y registro → [tarea](tasks/T-008-characterize-auth-services.md)
+7. T-009 · P0 · S · 🤖 gratuito · Completar los tests de TurnoServiceImpl → [tarea](tasks/T-009-complete-turno-service-tests.md)
+8. T-006 · P0 · M · 🧠 frontera · Infraestructura de tests del back: Testcontainers + JaCoCo → [tarea](tasks/T-006-backend-test-infrastructure.md)
+9. T-007 · P0 · M · 🧠 frontera · Infraestructura de tests del front: Vitest + RTL + MSW → [tarea](tasks/T-007-frontend-test-infrastructure.md)
+10. T-010 · P0 · S · 👤 dueño · Proteger `main` y limpiar ramas → [tarea](tasks/T-010-protect-main-branch.md) (no bloquea la cola)
 
-## ⛔ Bloqueadas
-- T-011 · P0 · S · 🧠 frontera · Agregar CI que corra el gate → [tarea](tasks/T-011-add-ci-workflow.md) · bloqueada por: T-001
-- T-012 · P0 · M · 🧠 frontera · Infraestructura E2E con Playwright → [tarea](tasks/T-012-e2e-smoke-infrastructure.md) · bloqueada por: T-003, T-011
-- T-013 · P0 · M · 🧠 frontera · Respuestas de error y autenticación correctas → [tarea](tasks/T-013-fix-auth-error-responses.md) · bloqueada por: T-006, T-008
-- T-014 · P0 · M · 🧠 frontera · Separar configuración dev/prod → [tarea](tasks/T-014-split-dev-prod-profiles.md) · bloqueada por: decisión del dueño (resetear o persistir la demo), T-006
-- T-015 · P0 · S · 🤖 ligero · Activar Dependabot → [tarea](tasks/T-015-enable-dependabot.md) · bloqueada por: T-011
+## ⛔ Bloqueadas (en el orden en que entrarán a la cola)
+1. T-011 · P0 · S · 🧠 frontera · Agregar CI que corra el gate → [tarea](tasks/T-011-add-ci-workflow.md) · bloqueada por: T-001
+2. T-012 · P0 · M · 🧠 frontera · Infraestructura E2E con Playwright → [tarea](tasks/T-012-e2e-smoke-infrastructure.md) · bloqueada por: T-003, T-011
+3. T-013 · P0 · M · 🧠 frontera · Respuestas de error y autenticación correctas → [tarea](tasks/T-013-fix-auth-error-responses.md) · bloqueada por: T-006, T-008
+4. T-014 · P0 · M · 🧠 frontera · Separar configuración dev/prod → [tarea](tasks/T-014-split-dev-prod-profiles.md) · bloqueada por: decisión del dueño (resetear o persistir la demo), T-006
+5. T-015 · P0 · S · 🤖 gratuito · Activar Dependabot → [tarea](tasks/T-015-enable-dependabot.md) · bloqueada por: T-011
 
-## 📥 Backlog (sin refinar: una línea, sin archivo de tarea todavía)
+## 📥 Backlog (sin refinar: una línea, agrupado por fase P0–P3)
 P0 (después de lo anterior)
 - Tests `@WebMvcTest` por controller (clientes, vehículos, turnos, cobros) copiando el de T-013 · P0 · 🤖
 - Filas nuevas de "Problemas frecuentes" del README con lo que vayan encontrando los agentes · P0 · 🤖
@@ -54,7 +56,6 @@ P2 Terminar
 - Estados loading / error / vacío consistentes en pantallas · P2 · 🤖
 - `@Builder.Default` en listas de entidades; `@ToString` de `User` sin password · P2 · 🤖
 - CORS restringido por entorno; revisar JWT de 10 días en `localStorage` · P2 · 🧠
-- `server/.dockerignore` (no copiar `env.properties`, `target/`) · P2 · 🤖
 - Quitar `DemoController`, `client/netlify.toml`; renombrar paquete `coworkproject`; logger en el scheduler · P2 · 🤖
 P3 Pulir
 - Accesibilidad: label en la búsqueda, contraste de botones azules/verdes, `<main>`, `<h1>` en la home · P3 · 🤖
