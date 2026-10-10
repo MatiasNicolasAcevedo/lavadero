@@ -54,6 +54,7 @@ P2 Terminar
 - Estados loading / error / vacío consistentes en pantallas · P2 · 🤖
 - `@Builder.Default` en listas de entidades; `@ToString` de `User` sin password · P2 · 🤖
 - CORS restringido por entorno; revisar JWT de 10 días en `localStorage` · P2 · 🧠
+- `server/.dockerignore` (no copiar `env.properties`, `target/`) · P2 · 🤖
 - Quitar `DemoController`, `client/netlify.toml`; renombrar paquete `coworkproject`; logger en el scheduler · P2 · 🤖
 P3 Pulir
 - Accesibilidad: label en la búsqueda, contraste de botones azules/verdes, `<main>`, `<h1>` en la home · P3 · 🤖

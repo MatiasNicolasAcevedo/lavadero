@@ -9,10 +9,10 @@ Todos los comandos desde `server/`, con JDK 17 (`java -version` → `17.x`).
 **1. Configuración local** (una vez, sin editar):
 
 ```bash
-cp env.properties.example env.properties
+cp env.properties.example src/main/resources/env.properties
 ```
 
-Resultado esperado: existe `server/env.properties`.
+Resultado esperado: existe `server/src/main/resources/env.properties` (ignorado por git).
 
 **2. Base de datos:**
 

@@ -33,7 +33,7 @@ verify_server() {
   cd "$ROOT/server" || return
 
   # Variables: env.properties si existe; si no, los valores locales de ejemplo.
-  local envfile="env.properties"
+  local envfile="src/main/resources/env.properties"
   [ -f "$envfile" ] || envfile="env.properties.example"
   set -a; # shellcheck disable=SC1090
   . "./$envfile"; set +a

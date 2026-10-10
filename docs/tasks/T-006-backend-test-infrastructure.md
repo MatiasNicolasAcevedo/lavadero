@@ -27,13 +27,13 @@
 - `AuthFlowIT` (`@SpringBootTest(webEnvironment = RANDOM_PORT)` + `TestRestTemplate`): login demo → 200 + token; endpoint protegido con token → 200; sin token → 403 (caracterización; T-013 lo cambia a 401).
 
 ## Pasos sugeridos
-1. Dependencias y config de Testcontainers; `contextLoads` en verde sin `env.properties` (`mv server/env.properties /tmp` para probar).
+1. Dependencias y config de Testcontainers; `contextLoads` en verde sin `env.properties` (moverlo a `/tmp` para probar).
 2. JaCoCo: medir, confirmar ≥ 52 % / 9 %, fijar umbral redondeando hacia abajo, publicar `target/site/jacoco/` como referencia.
 3. `AuthFlowIT`.
 4. `verify.sh` y docs.
 
 ## Criterios de aceptación
-- [ ] Sin `server/env.properties` y sin contenedor previo: `cd server && ./mvnw -B clean verify` → `BUILD SUCCESS`
+- [ ] Sin `server/src/main/resources/env.properties` y sin contenedor previo: `cd server && ./mvnw -B clean verify` → `BUILD SUCCESS`
 - [ ] `target/site/jacoco/index.html` generado; bajar el umbral a mano a 0.99 hace fallar `jacoco:check` (probar y revertir)
 - [ ] `AuthFlowIT` pasa y es el archivo de referencia de integración en `docs/TESTING.md`
 - [ ] `./scripts/verify.sh --server` en verde en < 2 min con dependencias cacheadas

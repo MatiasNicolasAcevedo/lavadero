@@ -92,10 +92,10 @@ Resultado esperado: `java -version` muestra `17.x` y `node -v` muestra `v22.x`. 
 **3. Crear la configuración local del back** — desde `lavadero/`. Se copia tal cual, sin editar:
 
 ```bash
-cp server/env.properties.example server/env.properties
+cp server/env.properties.example server/src/main/resources/env.properties
 ```
 
-Resultado esperado: existe `server/env.properties` (está en `.gitignore`; Spring lo lee al arrancar).
+Resultado esperado: existe `server/src/main/resources/env.properties` (está en `.gitignore`; Spring lo importa desde el classpath al arrancar y al correr los tests).
 
 **4. Levantar la base de datos** — desde `lavadero/`:
 
@@ -160,7 +160,7 @@ Resultado esperado: `Container lavadero-postgres Removed` y `Volume server_lavad
 ### Windows
 
 - Usá **Git Bash** o **WSL** para `./scripts/*.sh` y los comandos `cp`/`curl` de arriba.
-- En PowerShell/CMD el back se levanta con `mvnw.cmd spring-boot:run` (desde `server\`) y el paso 3 es `copy server\env.properties.example server\env.properties`.
+- En PowerShell/CMD el back se levanta con `mvnw.cmd spring-boot:run` (desde `server\`) y el paso 3 es `copy server\env.properties.example server\src\main\resources\env.properties`.
 - Si `./mvnw` da `bad interpreter` o `\r`, configurá `git config --global core.autocrlf input` y volvé a clonar.
 - ⚠️ No verificado en Windows todavía.
 
@@ -170,7 +170,8 @@ Resultado esperado: `Container lavadero-postgres Removed` y `Volume server_lavad
 |---|---|---|
 | `Fatal error compiling: java.lang.NoSuchFieldError: ... JCTree` | Compilando con JDK 21+ (Lombok 1.18.26) | Usar JDK 17 (`sdk env install`) hasta T-002 |
 | `./mvnw: Permission denied` | Clon viejo sin bit de ejecución | `chmod +x server/mvnw` (ya corregido en `main`) |
-| `Cannot load driver class: ${DB_DRIVER_CLASS_NAME}` | Falta `server/env.properties` | Paso 3 |
+| `Cannot load driver class: ${DB_DRIVER_CLASS_NAME}` | Falta `server/src/main/resources/env.properties` (o está en otra carpeta) | Paso 3 |
+| Login recién arrancado → 404 `User does not exist` | El seed todavía no terminó | Esperar `Seed dev completado con éxito.` en el log |
 | `Connection to localhost:5432 refused` | La base no está levantada o Docker Desktop cerrado | Paso 4; `docker compose -f server/docker-compose.yml ps` |
 | `port is already allocated` (5432) | Otro Postgres local usando el puerto | Detenerlo, o ver `docs/SETUP.md` § Puertos |
 | `Port 8080 was already in use` | Otra app (o un back anterior) en 8080 | Cerrarla; `lsof -i :8080` para encontrarla |

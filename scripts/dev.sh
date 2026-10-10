@@ -35,8 +35,9 @@ trap cleanup EXIT INT TERM
 
 # 1) Variables del back (sin editar nada: se copia el ejemplo si falta)
 cd "$ROOT/server"
-[ -f env.properties ] || cp env.properties.example env.properties
-set -a; . ./env.properties; set +a
+ENVFILE=src/main/resources/env.properties
+[ -f "$ENVFILE" ] || cp env.properties.example "$ENVFILE"
+set -a; . "./$ENVFILE"; set +a
 
 # 2) Base de datos
 echo "→ Postgres (docker compose)..."
