@@ -2,7 +2,7 @@
 _Actualizado: 2026-10-10 · por: agente de frontera · sesión: auditoría (bootstrap T-000)_
 
 ## En una línea
-Bootstrap en curso: PC1 alcanzado (inventario y verificación hechos; falta relevamiento por dimensiones y harness).
+Bootstrap en curso: PC2 alcanzado (auditoría completa; falta harness, docs y tablero).
 
 ## Salud
 | Check | Estado | Nota |
@@ -20,10 +20,10 @@ P0 Estabilizar · bootstrap en curso
 
 ## Foco
 - PRs abiertos: T-000 bootstrap (draft)
-- **Próximo paso exacto:** completar la Fase 2 de la auditoría (relevamiento por dimensiones) → PC2.
+- **Próximo paso exacto:** Fase 3 del bootstrap: harness (`scripts/`, toolchain, `.env`), README, docs → PC3.
 
 ## Decisiones pendientes del dueño
-- (se completan en el PC2)
+- Ver preguntas 1–5 en la [auditoría §5](audits/2026-10-10-initial.md#5-preguntas-abiertas-y-supuestos)
 
 ## Últimas sesiones
-- 2026-10-10 · frontera · auditó (T-000) · PC1 · PR en draft
+- 2026-10-10 · frontera · auditó (T-000) · PC2 · PR #33 en draft
