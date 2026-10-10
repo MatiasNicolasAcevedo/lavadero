@@ -1,8 +1,8 @@
 # T-011 · Agregar CI que corra el gate en cada push y PR
-- Estado: Bloqueada (por T-001) · Prioridad: P0 · Esfuerzo: S · Agente: 🧠 frontera
+- Estado: Bloqueada (por T-001) · Prioridad: P0 · Esfuerzo: S · Ejecuta: 🧠 modelo de frontera
 - Fase: P0 Estabilizar
-- Rama: `ci/T-011-add-ci-workflow` · Depende de: T-001 (lint) · Spec/ADR: —
-- Revisa: ligero (segunda mirada) + dueño
+- Rama: `ci/T-011-add-ci-workflow` (crearla desde `main` actualizado antes del primer commit) · Depende de: T-001 (lint) · Spec/ADR: —
+- Revisa: 🧠 modelo de frontera (sesión nueva, o sub-agente si el dueño lo pide) + 👤 dueño
 
 ## Por qué
 No hay CI (auditoría §4.8). No se agregó en T-000 porque `scripts/verify.sh` hoy falla por el lint del front; un workflow rojo desde el día uno no sirve como gate.

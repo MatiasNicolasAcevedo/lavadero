@@ -1,8 +1,8 @@
 # T-006 · Infraestructura de tests del back: Testcontainers + JaCoCo
-- Estado: Lista · Prioridad: P0 · Esfuerzo: M · Agente: 🧠 frontera
+- Estado: Lista · Prioridad: P0 · Esfuerzo: M · Ejecuta: 🧠 modelo de frontera
 - Fase: P0 Estabilizar
-- Rama: `test/T-006-backend-test-infrastructure` · Depende de: — · Spec/ADR: [0001](../adr/0001-testcontainers-postgres-over-h2.md)
-- Revisa: ligero (segunda mirada) + dueño
+- Rama: `test/T-006-backend-test-infrastructure` (crearla desde `main` actualizado antes del primer commit) · Depende de: — · Spec/ADR: [0001](../adr/0001-testcontainers-postgres-over-h2.md)
+- Revisa: 🧠 modelo de frontera (sesión nueva, o sub-agente si el dueño lo pide) + 👤 dueño
 
 ## Por qué
 `contextLoads` necesita Postgres levantado a mano y variables (auditoría §3, §4.7); no hay cobertura medida en el build ni ejemplo de test de integración para que copien las tareas 🤖.

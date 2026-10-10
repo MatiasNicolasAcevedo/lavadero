@@ -1,8 +1,8 @@
 # T-012 · Infraestructura E2E con Playwright y smoke del login
-- Estado: Bloqueada (por T-003) · Prioridad: P0 · Esfuerzo: M · Agente: 🧠 frontera
+- Estado: Bloqueada (por T-003) · Prioridad: P0 · Esfuerzo: M · Ejecuta: 🧠 modelo de frontera
 - Fase: P0 Estabilizar
-- Rama: `test/T-012-e2e-smoke-infrastructure` · Depende de: T-003, T-011 · Spec/ADR: —
-- Revisa: ligero (segunda mirada) + dueño
+- Rama: `test/T-012-e2e-smoke-infrastructure` (crearla desde `main` actualizado antes del primer commit) · Depende de: T-003, T-011 · Spec/ADR: —
+- Revisa: 🧠 modelo de frontera (sesión nueva, o sub-agente si el dueño lo pide) + 👤 dueño
 
 ## Por qué
 El flujo 9 de la auditoría (login → dashboard → vehículos → turnos) no tiene test; además el E2E en 375 px es el control de responsive del proyecto. En T-000 se verificó a mano con Playwright redirigiendo la URL de producción, lo que deja de hacer falta con T-003.

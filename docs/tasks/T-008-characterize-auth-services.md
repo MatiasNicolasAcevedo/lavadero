@@ -1,8 +1,8 @@
 # T-008 · Tests de caracterización de login y registro
-- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Agente: 🤖 ligero
+- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Ejecuta: 🤖 agente gratuito
 - Fase: P0 Estabilizar
-- Rama: `test/T-008-characterize-auth-services` · Depende de: — · Spec/ADR: —
-- Revisa: ligero
+- Rama: `test/T-008-characterize-auth-services` (crearla desde `main` actualizado antes del primer commit) · Depende de: — · Spec/ADR: —
+- Revisa: 🤖 agente gratuito (chat nuevo)
 
 ## Por qué
 Login y registro son los flujos críticos 1 y 2 (auditoría §4.7) y no tienen ningún test: `LoginServiceImpl` y `RegisterServiceImpl` están en 0 % de cobertura. Antes de corregir su comportamiento (T-013) hay que fijar el actual.

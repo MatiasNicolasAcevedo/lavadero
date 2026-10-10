@@ -1,8 +1,8 @@
 # T-002 · Actualizar Lombok para compilar con JDK 21
-- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Agente: 🤖 ligero
+- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Ejecuta: 🤖 agente gratuito
 - Fase: P0 Estabilizar
-- Rama: `build/T-002-upgrade-lombok-for-jdk21` · Depende de: — · Spec/ADR: [0002](../adr/0002-spring-boot-upgrade-path.md)
-- Revisa: ligero
+- Rama: `build/T-002-upgrade-lombok-for-jdk21` (crearla desde `main` actualizado antes del primer commit) · Depende de: — · Spec/ADR: [0002](../adr/0002-spring-boot-upgrade-path.md)
+- Revisa: 🤖 agente gratuito (chat nuevo)
 
 ## Por qué
 Con JDK 21 el build falla: `Fatal error compiling: java.lang.NoSuchFieldError: ... JCTree$JCImport ... qualid` (auditoría §3). Lombok 1.18.26 (`server/pom.xml:67` y `:148`) no soporta javac 21; la última es 1.18.48 (Maven Central, 2026-10-10).

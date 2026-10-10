@@ -1,8 +1,8 @@
 # T-015 · Activar Dependabot
-- Estado: Bloqueada (por T-011) · Prioridad: P0 · Esfuerzo: S · Agente: 🤖 ligero
+- Estado: Bloqueada (por T-011) · Prioridad: P0 · Esfuerzo: S · Ejecuta: 🤖 agente gratuito
 - Fase: P0 Estabilizar
-- Rama: `ci/T-015-enable-dependabot` · Depende de: T-011 (CI en verde) · Spec/ADR: —
-- Revisa: frontera (toca CI)
+- Rama: `ci/T-015-enable-dependabot` (crearla desde `main` actualizado antes del primer commit) · Depende de: T-011 (CI en verde) · Spec/ADR: —
+- Revisa: 🧠 modelo de frontera (toca CI)
 
 ## Por qué
 No hay actualización automática de dependencias (auditoría §4.8) y el front tiene 40 vulnerabilidades. Se activa recién con CI en verde para que cada PR de Dependabot se valide solo.

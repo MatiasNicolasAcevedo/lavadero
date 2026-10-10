@@ -1,8 +1,8 @@
 # T-004 · Quitar dependencias sin uso del front
-- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Agente: 🤖 ligero
+- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Ejecuta: 🤖 agente gratuito
 - Fase: P0 Estabilizar
-- Rama: `chore/T-004-remove-unused-client-deps` · Depende de: — · Spec/ADR: —
-- Revisa: ligero
+- Rama: `chore/T-004-remove-unused-client-deps` (crearla desde `main` actualizado antes del primer commit) · Depende de: — · Spec/ADR: —
+- Revisa: 🤖 agente gratuito (chat nuevo)
 
 ## Por qué
 `npm audit`: 40 vulnerabilidades (6 críticas). Las críticas vienen del paquete espurio `package.json@^2.0.1` (`client/package.json:17`, deprecado, trae `git-url-parse`/`parse-url`) y de `form-data` vía `axios`, que no se usa. Tampoco se importan `slick-carousel`, `date-fns`, `react-datepicker` ni `@types/react-datepicker` (`grep` en `client/src` = 0) (auditoría §4.2).

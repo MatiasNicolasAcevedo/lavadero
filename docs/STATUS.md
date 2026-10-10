@@ -19,8 +19,10 @@ Funciona de punta a punta en local con JDK 17; harness y tablero listos. Falta e
 P0 Estabilizar · 0/15 tareas · ver [ROADMAP](ROADMAP.md)
 
 ## Foco
-- PRs abiertos: ninguno
-- **Próximo paso exacto:** sesión nueva con `docs/agents/implementer.md` → toma T-001. En paralelo: dueño hace T-010 (protección de `main`), rota el secreto (T-005) y responde las decisiones de abajo.
+- PR abierto (máx. 1): #34 T-016 (draft, en curso: PC-A parcial)
+- **Próximo paso:** T-016 · Alinear el harness con el prompt de bootstrap v3 · **ejecuta: 🧠 modelo de frontera**
+- **Qué hacer:** abrí una sesión nueva de Claude Code y escribí: «Seguí con T-016 desde sus Notas de implementación (rama `chore/T-016-align-harness-v3`, PR #34)»
+- **Después:** T-005 (🧠) → T-001 (🤖) → T-003 (🤖)
 
 ## Decisiones pendientes del dueño
 - ¿El `SECRET` de Render es el valor que estaba commiteado? Si sí, rotarlo ya (T-005).

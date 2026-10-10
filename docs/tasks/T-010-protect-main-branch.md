@@ -1,5 +1,5 @@
 # T-010 · Proteger `main` y limpiar ramas (dueño)
-- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Agente: 👤 dueño
+- Estado: Lista · Prioridad: P0 · Esfuerzo: S · Ejecuta: 👤 dueño
 - Fase: P0 Estabilizar
 - Rama: — (configuración en GitHub) · Depende de: merge de T-000 · Spec/ADR: —
 - Revisa: —

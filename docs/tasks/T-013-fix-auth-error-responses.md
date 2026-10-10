@@ -1,8 +1,8 @@
 # T-013 · Respuestas de error y autenticación correctas (401/400 en vez de 403)
-- Estado: Bloqueada (por T-006) · Prioridad: P0 · Esfuerzo: M · Agente: 🧠 frontera
+- Estado: Bloqueada (por T-006) · Prioridad: P0 · Esfuerzo: M · Ejecuta: 🧠 modelo de frontera
 - Fase: P0 Estabilizar
-- Rama: `fix/T-013-fix-auth-error-responses` · Depende de: T-006 (perfil de test), T-008 (caracterización) · Spec/ADR: —
-- Revisa: ligero (segunda mirada) + dueño
+- Rama: `fix/T-013-fix-auth-error-responses` (crearla desde `main` actualizado antes del primer commit) · Depende de: T-006 (perfil de test), T-008 (caracterización) · Spec/ADR: —
+- Revisa: 🧠 modelo de frontera (sesión nueva, o sub-agente si el dueño lo pide) + 👤 dueño
 
 ## Por qué
 Probes de la auditoría (§3, §4.3, §4.6): sin token → 403; token malformado → 403 + stack trace; JSON inválido → 403 vacío (porque `/error` no es público, `SecurityConfig.java:81-88`); login con email inexistente → 404 `User does not exist` (`AppConfig.java:40-43`) y con password mala → 401 con el email en el mensaje (`LoginServiceImpl.java:57`): permite enumerar usuarios.
